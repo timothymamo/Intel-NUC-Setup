@@ -1,0 +1,204 @@
+version: "3"
+services:
+
+  homeassistant:
+    image: homeassistant/home-assistant:0.104.3
+    container_name: homeassistant
+    depends_on:
+      - transmission
+      - deconz
+        #      - influxdb
+        #      - grafana
+        #      - telegraf
+    healthcheck:
+      test: ["CMD", "curl", "-s", "http://localhost:8123"]
+      interval: 5s
+      timeout: 3s
+      retries: 100
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+    environment:
+      - TZ=Europe/Amsterdam
+    devices:
+      - /dev/ttyAMA0
+        #      - /dev/vcio
+    volumes:
+      - /home/tim/homeassistant/config:/config
+      - /home/tim/.ssh/asus_router:/config/asus_router
+
+  deconz:
+    image: marthoc/deconz:amd64-2.05.72
+    container_name: deconz
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - DECONZ_WEB_PORT=8080
+      - DECONZ_WS_PORT=8443
+      - TZ=Europe/Amsterdam
+      - DECONZ_UPNP=0
+      - DECONZ_DEVICE=/dev/ttyACM0 
+    devices:
+     - /dev/ttyACM0
+    volumes:
+      - /home/tim/deconz/config:/root/.local/share/dresden-elektronik/deCONZ
+      - /etc/localtime:/etc/localtime:ro
+
+        #  influxdb:
+        #    image: influxdb:1.7.9
+        #    container_name: influxdb 
+        #    restart: unless-stopped
+        #    environment:
+        #      - INFLUXDB_DB=home_assistant
+        #      - INFLUXDB_USER=${INFLUXDB_USER}
+        #      - INFLUXDB_USER_PASSWORD=${INFLUXDB_USER_PASSWORD}
+        #    volumes:
+        #      - /home/tim/influxdb:/var/lib/influxdb
+        #    ports:
+        #      - 8086:8086
+        #
+        #  grafana:
+        #    image: grafana/grafana:6.6.0
+        #    container_name: grafana
+        #    depends_on:
+        #      - telegraf
+        #    restart: unless-stopped
+        #    volumes:
+        #      - /home/tim/grafana:/var/lib/grafana
+        #    ports:
+        #      - 3000:3000
+        #
+        #  telegraf:
+        #    image: telegraf:1.13.2
+        #    container_name: telegraf
+        #    depends_on:
+        #      - influxdb
+        #    restart: unless-stopped
+        #    links:
+        #      - influxdb
+        #    environment:
+        #      - HOST_PROC=/host/proc
+        #      - TELEGRAF_DB_PASSWORD=${TELEGRAF_DB_PASSWORD}
+        #    volumes:
+        #      - /proc:/host/proc:ro
+        #      - /home/tim:/hostfs:ro
+        #      - /var/run/docker.sock:/var/run/docker.sock:ro
+        #      - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+
+        #  noip:
+        #    build:
+        #      context: ./services/noip
+        #    container_name: noip
+        #    restart: unless-stopped
+        #    environment:
+        #      - NOIP_USERNAME=${NOIP_EMAIL}
+        #      - NOIP_PASSWORD=${NOIP_PASSWORD}
+        #      - NOIP_HOSTNAME=${HOSTNAME}
+        #      - PERIOD=60
+
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:4.3.2-1
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+      - 67:67/udp
+      - 80:80/tcp
+      - 443:443/tcp
+    environment:
+      - TZ=Netherlands/Amsterdam
+      - WEBPASSWORD=${PIHOLE_PASSWORD}
+    volumes:
+      - /home/tim/pihole/etc-pihole/:/etc/pihole/
+      - /home/tim/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    restart: unless-stopped
+
+  transmission:
+    image: linuxserver/transmission:2.94-r2-ls41
+    container_name: transmission
+    depends_on:
+      - sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+      - TRANSMISSION_WEB_HOME=/combustion-release/
+      - USER=${TRANSMISSION_USERNAME}
+      - PASS=${TRANSMISSION_PASSWORD}
+    volumes:
+      - /home/tim/transmission/data:/config
+      - /home/tim/transmission/downloads:/downloads
+      - /home/tim/transmission/watch:/watch
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    restart: unless-stopped
+
+  sonarr:
+    image: linuxserver/sonarr:2.0.0.5337-ls95
+    container_name: sonarr
+    depends_on:
+      - jackett
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /home/tim/sonarr/data:/config
+      - /home/tim/sonarr/tvseries:/tv
+      - /home/tim/transmission/downloads:/downloads
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+  
+  radarr:
+    image: linuxserver/radarr:3.0.0.2666-ls8
+    container_name: radarr
+    depends_on:
+      - jackett
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /home/tim/radarr/data:/config
+      - /home/tim/radarr/movies:/movies
+      - /home/tim/transmission/downloads:/downloads
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+
+  jackett:
+    image: linuxserver/jackett:v0.12.1701-ls53
+    container_name: jackett
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /home/tim/jackett/data:/config
+      - /home/tim/transmission/watch:/downloads
+    ports:
+      - 9117:9117
+    restart: unless-stopped
+
+  plex:
+    image: linuxserver/plex:1.18.7.2457-77cb9455c-ls80
+    container_name: plex
+    network_mode: host
+    depends_on:
+      - sonarr
+      - radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - VERSION=docker
+    volumes:
+      - /home/tim/plex/data:/config
+      - /home/tim/sonarr/tvseries:/tv
+      - /home/tim/radarr/movies:/movies
+    restart: unless-stopped
