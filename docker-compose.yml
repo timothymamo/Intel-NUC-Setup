@@ -1,15 +1,27 @@
 version: "3"
 services:
 
+  web:
+    image: nginx:1.17.9
+    container_name: web
+    hostname: web
+    restart: unless-stopped
+    volumes:
+      - /home/tim/web/nginx/conf.d:/etc/nginx/conf.d
+    ports:
+      - 80:80
+
   homeassistant:
     image: homeassistant/home-assistant:0.104.3
     container_name: homeassistant
+    hostname: homeassistant 
+    network_mode: host
     depends_on:
       - transmission
       - deconz
-        #      - influxdb
-        #      - grafana
-        #      - telegraf
+      - influxdb
+      - grafana
+      - telegraf
     healthcheck:
       test: ["CMD", "curl", "-s", "http://localhost:8123"]
       interval: 5s
@@ -17,12 +29,12 @@ services:
       retries: 100
     restart: unless-stopped
     privileged: true
-    network_mode: host
+    ports:
+      - 8123:8123
     environment:
       - TZ=Europe/Amsterdam
     devices:
       - /dev/ttyAMA0
-        #      - /dev/vcio
     volumes:
       - /home/tim/homeassistant/config:/config
       - /home/tim/.ssh/asus_router:/config/asus_router
@@ -30,8 +42,11 @@ services:
   deconz:
     image: marthoc/deconz:amd64-2.05.72
     container_name: deconz
-    restart: unless-stopped
+    hostname: deconz 
     network_mode: host
+    restart: unless-stopped
+    ports:
+      - 8080:8080
     environment:
       - DECONZ_WEB_PORT=8080
       - DECONZ_WS_PORT=8443
@@ -44,81 +59,55 @@ services:
       - /home/tim/deconz/config:/root/.local/share/dresden-elektronik/deCONZ
       - /etc/localtime:/etc/localtime:ro
 
-        #  influxdb:
-        #    image: influxdb:1.7.9
-        #    container_name: influxdb 
-        #    restart: unless-stopped
-        #    environment:
-        #      - INFLUXDB_DB=home_assistant
-        #      - INFLUXDB_USER=${INFLUXDB_USER}
-        #      - INFLUXDB_USER_PASSWORD=${INFLUXDB_USER_PASSWORD}
-        #    volumes:
-        #      - /home/tim/influxdb:/var/lib/influxdb
-        #    ports:
-        #      - 8086:8086
-        #
-        #  grafana:
-        #    image: grafana/grafana:6.6.0
-        #    container_name: grafana
-        #    depends_on:
-        #      - telegraf
-        #    restart: unless-stopped
-        #    volumes:
-        #      - /home/tim/grafana:/var/lib/grafana
-        #    ports:
-        #      - 3000:3000
-        #
-        #  telegraf:
-        #    image: telegraf:1.13.2
-        #    container_name: telegraf
-        #    depends_on:
-        #      - influxdb
-        #    restart: unless-stopped
-        #    links:
-        #      - influxdb
-        #    environment:
-        #      - HOST_PROC=/host/proc
-        #      - TELEGRAF_DB_PASSWORD=${TELEGRAF_DB_PASSWORD}
-        #    volumes:
-        #      - /proc:/host/proc:ro
-        #      - /home/tim:/hostfs:ro
-        #      - /var/run/docker.sock:/var/run/docker.sock:ro
-        #      - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-
-        #  noip:
-        #    build:
-        #      context: ./services/noip
-        #    container_name: noip
-        #    restart: unless-stopped
-        #    environment:
-        #      - NOIP_USERNAME=${NOIP_EMAIL}
-        #      - NOIP_PASSWORD=${NOIP_PASSWORD}
-        #      - NOIP_HOSTNAME=${HOSTNAME}
-        #      - PERIOD=60
-
-  pihole:
-    container_name: pihole
-    image: pihole/pihole:4.3.2-1
-    ports:
-      - 53:53/tcp
-      - 53:53/udp
-      - 67:67/udp
-      - 80:80/tcp
-      - 443:443/tcp
-    environment:
-      - TZ=Netherlands/Amsterdam
-      - WEBPASSWORD=${PIHOLE_PASSWORD}
-    volumes:
-      - /home/tim/pihole/etc-pihole/:/etc/pihole/
-      - /home/tim/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
-    dns:
-      - 127.0.0.1
-      - 1.1.1.1
+  influxdb:
+    image: influxdb:1.7.9
+    container_name: influxdb 
     restart: unless-stopped
+    hostname: influxdb
+    environment:
+      - INFLUXDB_DB=home_assistant
+      - INFLUXDB_USER=${INFLUXDB_USER}
+      - INFLUXDB_USER_PASSWORD=${INFLUXDB_USER_PASSWORD}
+    volumes:
+      - /home/tim/influxdb:/var/lib/influxdb
+    ports:
+      - 8086:8086
+
+  grafana:
+    image: grafana/grafana:6.6.0
+    container_name: grafana
+    hostname: grafana
+    user: 0:0
+    depends_on:
+      - telegraf
+    restart: unless-stopped
+    volumes:
+      - /home/tim/grafana:/var/lib/grafana
+    ports:
+      - 3000:3000
+
+  telegraf:
+    image: telegraf:1.13.2
+    container_name: telegraf
+    hostname: telegraf
+    depends_on:
+      - influxdb
+    restart: unless-stopped
+    links:
+      - influxdb
+    environment:
+      - HOST_PROC=/host/proc
+      - TELEGRAF_DB_PASSWORD=${TELEGRAF_DB_PASSWORD}
+    volumes:
+      - /proc:/host/proc:ro
+      - /home/tim:/hostfs:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
 
   transmission:
     image: linuxserver/transmission:2.94-r2-ls41
     container_name: transmission
+    hostname: transmission 
     depends_on:
       - sonarr
     environment:
@@ -141,6 +130,7 @@ services:
   sonarr:
     image: linuxserver/sonarr:2.0.0.5337-ls95
     container_name: sonarr
+    hostname: sonarr 
     depends_on:
       - jackett
     environment:
@@ -158,6 +148,7 @@ services:
   radarr:
     image: linuxserver/radarr:3.0.0.2666-ls8
     container_name: radarr
+    hostname: radarr 
     depends_on:
       - jackett
     environment:
@@ -175,6 +166,7 @@ services:
   jackett:
     image: linuxserver/jackett:v0.12.1701-ls53
     container_name: jackett
+    hostname: jackett 
     environment:
       - PUID=1000
       - PGID=1000
@@ -189,10 +181,13 @@ services:
   plex:
     image: linuxserver/plex:1.18.7.2457-77cb9455c-ls80
     container_name: plex
+    hostname: plex 
     network_mode: host
     depends_on:
       - sonarr
       - radarr
+    ports:
+      - 32400:32400
     environment:
       - PUID=1000
       - PGID=1000
@@ -201,4 +196,5 @@ services:
       - /home/tim/plex/data:/config
       - /home/tim/sonarr/tvseries:/tv
       - /home/tim/radarr/movies:/movies
+      - /tmp/transcoding:/tmp/transcoding
     restart: unless-stopped
