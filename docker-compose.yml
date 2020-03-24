@@ -40,7 +40,7 @@ services:
       - /home/tim/.ssh/asus_router:/config/asus_router
 
   deconz:
-    image: marthoc/deconz:amd64-2.05.72
+    image: marthoc/deconz:amd64-2.05.75
     container_name: deconz
     hostname: deconz 
     network_mode: host
@@ -60,7 +60,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
 
   influxdb:
-    image: influxdb:1.7.9
+    image: influxdb:1.7.10
     container_name: influxdb 
     restart: unless-stopped
     hostname: influxdb
@@ -74,7 +74,7 @@ services:
       - 8086:8086
 
   grafana:
-    image: grafana/grafana:6.6.0
+    image: grafana/grafana:6.7.1
     container_name: grafana
     hostname: grafana
     user: 0:0
@@ -87,7 +87,7 @@ services:
       - 3000:3000
 
   telegraf:
-    image: telegraf:1.13.2
+    image: telegraf:1.13.4
     container_name: telegraf
     hostname: telegraf
     depends_on:
@@ -105,7 +105,7 @@ services:
       - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
 
   transmission:
-    image: linuxserver/transmission:2.94-r2-ls41
+    image: linuxserver/transmission:2.94-r2-ls44
     container_name: transmission
     hostname: transmission 
     depends_on:
@@ -128,7 +128,7 @@ services:
     restart: unless-stopped
 
   sonarr:
-    image: linuxserver/sonarr:2.0.0.5337-ls95
+    image: linuxserver/sonarr:2.0.0.5344-ls55
     container_name: sonarr
     hostname: sonarr 
     depends_on:
@@ -146,7 +146,7 @@ services:
     restart: unless-stopped
   
   radarr:
-    image: linuxserver/radarr:3.0.0.2666-ls8
+    image: linuxserver/radarr:v0.2.0.1480-ls54
     container_name: radarr
     hostname: radarr 
     depends_on:
@@ -164,7 +164,7 @@ services:
     restart: unless-stopped
 
   jackett:
-    image: linuxserver/jackett:v0.12.1701-ls53
+    image: linuxserver/jackett:v0.14.253-ls58
     container_name: jackett
     hostname: jackett 
     environment:
@@ -179,7 +179,7 @@ services:
     restart: unless-stopped
 
   plex:
-    image: linuxserver/plex:1.18.7.2457-77cb9455c-ls80
+    image: linuxserver/plex:1.18.8.2527-740d4c206-ls84
     container_name: plex
     hostname: plex 
     network_mode: host
