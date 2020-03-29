@@ -146,7 +146,7 @@ services:
     restart: unless-stopped
   
   radarr:
-    image: linuxserver/radarr:v0.2.0.1480-ls54
+    image: linuxserver/radarr:3.0.0.2666-ls8
     container_name: radarr
     hostname: radarr 
     depends_on:
@@ -179,7 +179,7 @@ services:
     restart: unless-stopped
 
   plex:
-    image: linuxserver/plex:1.18.8.2527-740d4c206-ls84
+    image: linuxserver/plex:1.18.9.2571-e106a8a91-ls86
     container_name: plex
     hostname: plex 
     network_mode: host
@@ -199,23 +199,23 @@ services:
       - /tmp/transcoding:/tmp/transcoding
     restart: unless-stopped
 
-  pihole:
-    container_name: pihole
-    image: pihole/pihole:4.3.2-1
-    user: "0"
-    ports:
-      - 53:53/tcp
-      - 53:53/udp
-      - 67:67/udp
-      - 8380:80/tcp
-      - 443:443/tcp
-    environment:
-      - TZ=Netherlands/Amsterdam
-      - WEBPASSWORD=${PIHOLE_PASSWORD}
-    volumes:
-      - /home/tim/pihole/etc-pihole/:/etc/pihole/
-      - /home/tim/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
-    dns:
-      - 127.0.0.1
-      - 1.1.1.1
-    restart: unless-stopped
+    #  pihole:
+    #    container_name: pihole
+    #    image: pihole/pihole:4.3.2-1
+    #    user: "0"
+    #    ports:
+    #      - 53:53/tcp
+    #      - 53:53/udp
+    #      - 67:67/udp
+    #      - 8380:80/tcp
+    #      - 443:443/tcp
+    #    environment:
+    #      - TZ=Netherlands/Amsterdam
+    #      - WEBPASSWORD=${PIHOLE_PASSWORD}
+    #    volumes:
+    #      - /home/tim/pihole/etc-pihole/:/etc/pihole/
+    #      - /home/tim/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
+    #    dns:
+    #      - 127.0.0.1
+    #      - 1.1.1.1
+    #    restart: unless-stopped
