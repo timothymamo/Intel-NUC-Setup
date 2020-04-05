@@ -12,7 +12,7 @@ services:
       - 80:80
 
   homeassistant:
-    image: homeassistant/home-assistant:0.104.3
+    image: homeassistant/home-assistant:0.107.7
     container_name: homeassistant
     hostname: homeassistant 
     network_mode: host
@@ -199,23 +199,25 @@ services:
       - /tmp/transcoding:/tmp/transcoding
     restart: unless-stopped
 
-    #  pihole:
-    #    container_name: pihole
-    #    image: pihole/pihole:4.3.2-1
-    #    user: "0"
-    #    ports:
-    #      - 53:53/tcp
-    #      - 53:53/udp
-    #      - 67:67/udp
-    #      - 8380:80/tcp
-    #      - 443:443/tcp
-    #    environment:
-    #      - TZ=Netherlands/Amsterdam
-    #      - WEBPASSWORD=${PIHOLE_PASSWORD}
-    #    volumes:
-    #      - /home/tim/pihole/etc-pihole/:/etc/pihole/
-    #      - /home/tim/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
-    #    dns:
-    #      - 127.0.0.1
-    #      - 1.1.1.1
-    #    restart: unless-stopped
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:v4.4
+    user: "0"
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+      - 67:67/udp
+      - 8380:80/tcp
+      - 443:443/tcp
+    environment:
+      - TZ=Netherlands/Amsterdam
+      - WEBPASSWORD=${PIHOLE_PASSWORD}
+      - DNS1=1.1.1.1
+      - DNS2=1.0.0.1
+    volumes:
+      - /home/tim/pihole/etc-pihole/:/etc/pihole/
+      - /home/tim/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    restart: unless-stopped
