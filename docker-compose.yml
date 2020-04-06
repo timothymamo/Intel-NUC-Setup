@@ -5,6 +5,8 @@ services:
     image: nginx:1.17.9
     container_name: web
     hostname: web
+    networks:
+      - web
     restart: unless-stopped
     volumes:
       - /home/tim/web/nginx/conf.d:/etc/nginx/conf.d
@@ -15,7 +17,11 @@ services:
     image: homeassistant/home-assistant:0.104.3
     container_name: homeassistant
     hostname: homeassistant 
-    network_mode: host
+    # network_mode: host
+    networks:
+      - web
+      - home
+      - monitoring
     depends_on:
       - transmission
       - deconz
@@ -43,10 +49,14 @@ services:
     image: marthoc/deconz:amd64-2.05.75
     container_name: deconz
     hostname: deconz 
-    network_mode: host
+    # network_mode: host
+    networks:
+      - web
+      - home
     restart: unless-stopped
     ports:
       - 8080:8080
+      - 8443:8443
     environment:
       - DECONZ_WEB_PORT=8080
       - DECONZ_WS_PORT=8443
@@ -64,6 +74,9 @@ services:
     container_name: influxdb 
     restart: unless-stopped
     hostname: influxdb
+    networks:
+      - monitoring
+      - web
     environment:
       - INFLUXDB_DB=home_assistant
       - INFLUXDB_USER=${INFLUXDB_USER}
@@ -77,6 +90,9 @@ services:
     image: grafana/grafana:6.7.1
     container_name: grafana
     hostname: grafana
+    networks:
+      - monitoring
+      - web
     user: 0:0
     depends_on:
       - telegraf
@@ -90,6 +106,9 @@ services:
     image: telegraf:1.13.4
     container_name: telegraf
     hostname: telegraf
+    networks:
+      - monitoring
+      - web
     depends_on:
       - influxdb
     restart: unless-stopped
@@ -107,7 +126,9 @@ services:
   transmission:
     image: linuxserver/transmission:2.94-r2-ls44
     container_name: transmission
-    hostname: transmission 
+    hostname: transmission
+    networks:
+      - web
     depends_on:
       - sonarr
     environment:
@@ -130,7 +151,9 @@ services:
   sonarr:
     image: linuxserver/sonarr:2.0.0.5344-ls55
     container_name: sonarr
-    hostname: sonarr 
+    hostname: sonarr
+    networks:
+      - web
     depends_on:
       - jackett
     environment:
@@ -148,7 +171,9 @@ services:
   radarr:
     image: linuxserver/radarr:v0.2.0.1480-ls54
     container_name: radarr
-    hostname: radarr 
+    hostname: radarr
+    networks:
+      - web
     depends_on:
       - jackett
     environment:
@@ -166,7 +191,9 @@ services:
   jackett:
     image: linuxserver/jackett:v0.14.253-ls58
     container_name: jackett
-    hostname: jackett 
+    hostname: jackett
+    networks:
+      - web
     environment:
       - PUID=1000
       - PGID=1000
@@ -181,13 +208,15 @@ services:
   plex:
     image: linuxserver/plex:1.18.8.2527-740d4c206-ls84
     container_name: plex
-    hostname: plex 
+    hostname: plex
     network_mode: host
+    networks:
+      - web
     depends_on:
       - sonarr
       - radarr
-    ports:
-      - 32400:32400
+    # ports:
+    #   - 32400:32400
     environment:
       - PUID=1000
       - PGID=1000
@@ -202,6 +231,8 @@ services:
   pihole:
     container_name: pihole
     image: pihole/pihole:4.3.2-1
+    networks:
+      - web
     user: "0"
     ports:
       - 53:53/tcp
@@ -219,3 +250,8 @@ services:
       - 127.0.0.1
       - 1.1.1.1
     restart: unless-stopped
+
+networks:
+  home:
+  monitoring:
+  web:
