@@ -2,7 +2,7 @@ version: "3"
 services:
 
   web:
-    image: nginx:1.17.9
+    image: nginx:1.18
     container_name: web
     hostname: web
     networks:
@@ -14,7 +14,7 @@ services:
       - 80:80
 
   homeassistant:
-    image: homeassistant/home-assistant:0.107.7
+    image: homeassistant/home-assistant:0.110.2
     container_name: homeassistant
     hostname: homeassistant 
     # network_mode: host
@@ -46,7 +46,7 @@ services:
       - /home/tim/.ssh/asus_router:/config/asus_router
 
   deconz:
-    image: marthoc/deconz:amd64-2.05.75
+    image: marthoc/deconz:amd64-2.05.76
     container_name: deconz
     hostname: deconz 
     # network_mode: host
@@ -70,7 +70,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
 
   influxdb:
-    image: influxdb:1.7.10
+    image: influxdb:1.8.0
     container_name: influxdb 
     restart: unless-stopped
     hostname: influxdb
@@ -87,7 +87,7 @@ services:
       - 8086:8086
 
   grafana:
-    image: grafana/grafana:6.7.1
+    image: grafana/grafana:6.7.3 # 7.0.0 is available but need to look into any breaking changes
     container_name: grafana
     hostname: grafana
     networks:
@@ -103,7 +103,7 @@ services:
       - 3000:3000
 
   telegraf:
-    image: telegraf:1.13.4
+    image: telegraf:1.14.3
     container_name: telegraf
     hostname: telegraf
     networks:
@@ -124,7 +124,7 @@ services:
       - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
 
   transmission:
-    image: linuxserver/transmission:2.94-r2-ls44
+    image: linuxserver/transmission:2.94-r3-ls53
     container_name: transmission
     hostname: transmission
     networks:
@@ -149,7 +149,7 @@ services:
     restart: unless-stopped
 
   sonarr:
-    image: linuxserver/sonarr:2.0.0.5344-ls55
+    image: linuxserver/sonarr:2.0.0.5344-ls65
     container_name: sonarr
     hostname: sonarr
     networks:
@@ -169,7 +169,7 @@ services:
     restart: unless-stopped
   
   radarr:
-    image: linuxserver/radarr:3.0.0.2666-ls8
+    image: linuxserver/radarr:3.0.0.2998-ls7
     container_name: radarr
     hostname: radarr
     networks:
@@ -189,7 +189,7 @@ services:
     restart: unless-stopped
 
   jackett:
-    image: linuxserver/jackett:v0.14.253-ls58
+    image: linuxserver/jackett:v0.16.546-ls53
     container_name: jackett
     hostname: jackett
     networks:
@@ -206,7 +206,7 @@ services:
     restart: unless-stopped
 
   plex:
-    image: linuxserver/plex:1.18.9.2571-e106a8a91-ls86
+    image: linuxserver/plex:1.19.3.2852-219a9974e-ls99
     container_name: plex
     hostname: plex
     network_mode: host
@@ -226,30 +226,30 @@ services:
       - /tmp/transcoding:/tmp/transcoding
     restart: unless-stopped
 
-  pihole:
-    container_name: pihole
-    image: pihole/pihole:v4.4
-    networks:
-      - web
-    user: "0"
-    ports:
-      - 53:53/tcp
-      - 53:53/udp
-      - 67:67/udp
-      - 8380:80/tcp
-      - 443:443/tcp
-    environment:
-      - TZ=Netherlands/Amsterdam
-      - WEBPASSWORD=${PIHOLE_PASSWORD}
-      - DNS1=1.1.1.1
-      - DNS2=1.0.0.1
-    volumes:
-      - /home/tim/pihole/etc-pihole/:/etc/pihole/
-      - /home/tim/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
-    dns:
-      - 127.0.0.1
-      - 1.1.1.1
-    restart: unless-stopped
+  # pihole:
+  #   container_name: pihole
+  #   image: pihole/pihole:v4.4 # v5 is out - look into new features, stability and any upgrade guides
+  #   networks:
+  #     - web
+  #   user: "0"
+  #   ports:
+  #     - 53:53/tcp
+  #     - 53:53/udp
+  #     - 67:67/udp
+  #     - 8380:80/tcp
+  #     - 443:443/tcp
+  #   environment:
+  #     - TZ=Netherlands/Amsterdam
+  #     - WEBPASSWORD=${PIHOLE_PASSWORD}
+  #     - DNS1=1.1.1.1
+  #     - DNS2=1.0.0.1
+  #   volumes:
+  #     - /home/tim/pihole/etc-pihole/:/etc/pihole/
+  #     - /home/tim/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
+  #   dns:
+  #     - 127.0.0.1
+  #     - 1.1.1.1
+  #   restart: unless-stopped
 
 networks:
   home:
