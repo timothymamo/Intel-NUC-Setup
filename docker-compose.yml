@@ -5,8 +5,6 @@ services:
     image: nginx:1.18
     container_name: web
     hostname: web
-    networks:
-      - web
     restart: unless-stopped
     volumes:
       - /home/tim/web/nginx/conf.d:/etc/nginx/conf.d
@@ -17,11 +15,7 @@ services:
     image: homeassistant/home-assistant:0.110.2
     container_name: homeassistant
     hostname: homeassistant 
-    # network_mode: host
-    networks:
-      - web
-      - home
-      - monitoring
+    network_mode: host
     depends_on:
       - transmission
       - deconz
@@ -35,8 +29,6 @@ services:
       retries: 100
     restart: unless-stopped
     privileged: true
-    ports:
-      - 8123:8123
     environment:
       - TZ=Europe/Amsterdam
     devices:
@@ -49,14 +41,8 @@ services:
     image: marthoc/deconz:amd64-2.05.76
     container_name: deconz
     hostname: deconz 
-    # network_mode: host
-    networks:
-      - web
-      - home
+    network_mode: host
     restart: unless-stopped
-    ports:
-      - 8080:8080
-      - 8443:8443
     environment:
       - DECONZ_WEB_PORT=8080
       - DECONZ_WS_PORT=8443
@@ -74,15 +60,13 @@ services:
     container_name: influxdb 
     restart: unless-stopped
     hostname: influxdb
-    networks:
-      - monitoring
-      - web
     environment:
       - INFLUXDB_DB=home_assistant
       - INFLUXDB_USER=${INFLUXDB_USER}
       - INFLUXDB_USER_PASSWORD=${INFLUXDB_USER_PASSWORD}
     volumes:
       - /home/tim/influxdb:/var/lib/influxdb
+      - /home/tim/influxdb/influxdb.conf:/etc/influxdb/influxdb.conf
     ports:
       - 8086:8086
 
@@ -90,9 +74,6 @@ services:
     image: grafana/grafana:6.7.3 # 7.0.0 is available but need to look into any breaking changes
     container_name: grafana
     hostname: grafana
-    networks:
-      - monitoring
-      - web
     user: 0:0
     depends_on:
       - telegraf
@@ -106,20 +87,18 @@ services:
     image: telegraf:1.14.3
     container_name: telegraf
     hostname: telegraf
-    networks:
-      - monitoring
-      - web
+    privileged: true
     depends_on:
       - influxdb
     restart: unless-stopped
     links:
       - influxdb
     environment:
-      - HOST_PROC=/host/proc
+      - HOST_PROC=/hostfs/proc
+      - HOST_MOUNT_PREFIX=/hostfs
       - TELEGRAF_DB_PASSWORD=${TELEGRAF_DB_PASSWORD}
     volumes:
-      - /proc:/host/proc:ro
-      - /home/tim:/hostfs:ro
+      - /:/hostfs:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
 
@@ -127,10 +106,6 @@ services:
     image: linuxserver/transmission:2.94-r3-ls53
     container_name: transmission
     hostname: transmission
-    networks:
-      - web
-    depends_on:
-      - sonarr
     environment:
       - PUID=1000
       - PGID=1000
@@ -140,7 +115,7 @@ services:
       - PASS=${TRANSMISSION_PASSWORD}
     volumes:
       - /home/tim/transmission/data:/config
-      - /home/tim/transmission/downloads:/downloads
+      - /home/tim/ext-hd/transmission/downloads:/downloads
       - /home/tim/transmission/watch:/watch
     ports:
       - 9091:9091
@@ -152,18 +127,17 @@ services:
     image: linuxserver/sonarr:2.0.0.5344-ls65
     container_name: sonarr
     hostname: sonarr
-    networks:
-      - web
     depends_on:
       - jackett
+      - transmission
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Amsterdam
     volumes:
       - /home/tim/sonarr/data:/config
-      - /home/tim/sonarr/tvseries:/tv
-      - /home/tim/transmission/downloads:/downloads
+      - /home/tim/ext-hd/sonarr/tvseries:/tv
+      - /home/tim/ext-hd/transmission/downloads:/downloads
     ports:
       - 8989:8989
     restart: unless-stopped
@@ -172,18 +146,17 @@ services:
     image: linuxserver/radarr:3.0.0.2998-ls7
     container_name: radarr
     hostname: radarr
-    networks:
-      - web
     depends_on:
       - jackett
+      - transmission
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Amsterdam
     volumes:
       - /home/tim/radarr/data:/config
-      - /home/tim/radarr/movies:/movies
-      - /home/tim/transmission/downloads:/downloads
+      - /home/tim/ext-hd/radarr/movies:/movies
+      - /home/tim/ext-hd/transmission/downloads:/downloads
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -192,15 +165,13 @@ services:
     image: linuxserver/jackett:v0.16.546-ls53
     container_name: jackett
     hostname: jackett
-    networks:
-      - web
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Amsterdam
     volumes:
       - /home/tim/jackett/data:/config
-      - /home/tim/transmission/watch:/downloads
+      - /home/tim/ext-hd/transmission/watch:/downloads
     ports:
       - 9117:9117
     restart: unless-stopped
@@ -213,45 +184,36 @@ services:
     depends_on:
       - sonarr
       - radarr
-    # ports:
-    #   - 32400:32400
     environment:
       - PUID=1000
       - PGID=1000
       - VERSION=docker
     volumes:
       - /home/tim/plex/data:/config
-      - /home/tim/sonarr/tvseries:/tv
-      - /home/tim/radarr/movies:/movies
+      - /home/tim/ext-hd/sonarr/tvseries:/tv
+      - /home/tim/ext-hd/radarr/movies:/movies
       - /tmp/transcoding:/tmp/transcoding
     restart: unless-stopped
 
-  # pihole:
-  #   container_name: pihole
-  #   image: pihole/pihole:v4.4 # v5 is out - look into new features, stability and any upgrade guides
-  #   networks:
-  #     - web
-  #   user: "0"
-  #   ports:
-  #     - 53:53/tcp
-  #     - 53:53/udp
-  #     - 67:67/udp
-  #     - 8380:80/tcp
-  #     - 443:443/tcp
-  #   environment:
-  #     - TZ=Netherlands/Amsterdam
-  #     - WEBPASSWORD=${PIHOLE_PASSWORD}
-  #     - DNS1=1.1.1.1
-  #     - DNS2=1.0.0.1
-  #   volumes:
-  #     - /home/tim/pihole/etc-pihole/:/etc/pihole/
-  #     - /home/tim/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
-  #   dns:
-  #     - 127.0.0.1
-  #     - 1.1.1.1
-  #   restart: unless-stopped
-
-networks:
-  home:
-  monitoring:
-  web:
+    #  pihole:
+    #    container_name: pihole
+    #    image: pihole/pihole:v4.4
+    #    user: "0"
+    #    ports:
+    #      - 53:53/tcp
+    #      - 53:53/udp
+    #      - 67:67/udp
+    #      - 8380:80/tcp
+    #      - 443:443/tcp
+    #    environment:
+    #      - TZ=Netherlands/Amsterdam
+    #      - WEBPASSWORD=${PIHOLE_PASSWORD}
+    #      - DNS1=1.1.1.1
+    #      - DNS2=1.0.0.1
+    #    volumes:
+    #      - /home/tim/pihole/etc-pihole/:/etc/pihole/
+    #      - /home/tim/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
+    #    dns:
+    #      - 127.0.0.1
+    #      - 1.1.1.1
+    #    restart: unless-stopped
