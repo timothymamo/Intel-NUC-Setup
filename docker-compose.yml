@@ -103,7 +103,7 @@ services:
       - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
 
   transmission:
-    image: linuxserver/transmission:2.94-r3-ls53
+    image: linuxserver/transmission:3.00-r0-ls63 #Latest
     container_name: transmission
     hostname: transmission
     environment:
@@ -124,7 +124,7 @@ services:
     restart: unless-stopped
 
   sonarr:
-    image: linuxserver/sonarr:2.0.0.5344-ls65
+    image: linuxserver/sonarr:2.0.0.5344-ls77 #Latest
     container_name: sonarr
     hostname: sonarr
     depends_on:
@@ -143,7 +143,7 @@ services:
     restart: unless-stopped
   
   radarr:
-    image: linuxserver/radarr:3.0.0.2998-ls7
+    image: linuxserver/radarr:3.0.0.3502-ls21 #Latest
     container_name: radarr
     hostname: radarr
     depends_on:
@@ -162,7 +162,7 @@ services:
     restart: unless-stopped
 
   jackett:
-    image: linuxserver/jackett:v0.16.546-ls53
+    image: linuxserver/jackett:v0.16.1039-ls14 #Latest
     container_name: jackett
     hostname: jackett
     environment:
