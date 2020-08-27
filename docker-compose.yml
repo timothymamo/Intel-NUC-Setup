@@ -177,7 +177,7 @@ services:
     restart: unless-stopped
 
   plex:
-    image: linuxserver/plex:1.19.3.2852-219a9974e-ls99
+    image: linuxserver/plex:1.19.5.3112-b23ab3896-ls114 #Latest
     container_name: plex
     hostname: plex
     network_mode: host
