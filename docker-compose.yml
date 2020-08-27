@@ -12,7 +12,7 @@ services:
       - 80:80
 
   homeassistant:
-    image: homeassistant/home-assistant:0.110.2
+    image: homeassistant/home-assistant:0.111.4
     container_name: homeassistant
     hostname: homeassistant 
     network_mode: host
