@@ -2,7 +2,7 @@ version: "3"
 services:
 
   web:
-    image: nginx:1.19.2
+    image: nginx:1.19.2 #Latest
     container_name: web
     hostname: web
     restart: unless-stopped
@@ -38,7 +38,7 @@ services:
       - /home/tim/.ssh/asus_router:/config/asus_router
 
   deconz:
-    image: marthoc/deconz:amd64-2.05.76
+    image: marthoc/deconz:amd64-2.05.80 #Latest
     container_name: deconz
     hostname: deconz 
     network_mode: host
@@ -56,7 +56,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
 
   influxdb:
-    image: influxdb:1.8.0
+    image: influxdb:1.8.1 #Latest
     container_name: influxdb 
     restart: unless-stopped
     hostname: influxdb
@@ -84,7 +84,7 @@ services:
       - 3000:3000
 
   telegraf:
-    image: telegraf:1.14.3
+    image: telegraf:1.15.2 #Latest
     container_name: telegraf
     hostname: telegraf
     privileged: true
