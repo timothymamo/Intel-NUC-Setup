@@ -2,7 +2,7 @@ version: "3"
 services:
 
   web:
-    image: nginx:1.19.5 #Latest
+    image: nginx:1.19.6 #Latest
     container_name: web
     hostname: web
     restart: unless-stopped
@@ -39,7 +39,7 @@ services:
       - /home/tim/homeassistant/config:/config
 
   deconz:
-    image: marthoc/deconz:amd64-2.07.01 #Latest
+    image: marthoc/deconz:amd64-2.09.01 #Latest
     container_name: deconz
     hostname: deconz 
     network_mode: host
@@ -57,7 +57,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
 
   influxdb:
-    image: influxdb:1.8.3 #Latest
+    image: influxdb:1.8.4 #Latest
     container_name: influxdb 
     restart: unless-stopped
     hostname: influxdb
@@ -72,7 +72,7 @@ services:
       - 8086:8086
 
   grafana:
-    image: grafana/grafana:7.3.4 #Latest 
+    image: grafana/grafana:7.4.0 #Latest 
     container_name: grafana
     hostname: grafana
     user: 0:0
@@ -87,7 +87,7 @@ services:
       - home-web
 
   telegraf:
-    image: telegraf:1.16.2 #Latest
+    image: telegraf:1.17.2 #Latest
     container_name: telegraf
     hostname: telegraf
     privileged: true
@@ -106,7 +106,7 @@ services:
       - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
 
   transmission:
-    image: linuxserver/transmission:3.00-r0-ls69 #Latest
+    image: linuxserver/transmission:3.00-r2-ls76 #Latest
     container_name: transmission
     hostname: transmission
     environment:
@@ -129,7 +129,7 @@ services:
       - home-web
 
   sonarr:
-    image: linuxserver/sonarr:2.0.0.5344-ls87 #Latest
+    image: linuxserver/sonarr:2.0.0.5344-ls93 #Latest
     container_name: sonarr
     hostname: sonarr
     depends_on:
@@ -150,7 +150,7 @@ services:
       - home-web
   
   radarr:
-    image: linuxserver/radarr:3.0.0.4192-ls2 #Latest
+    image: linuxserver/radarr:3.0.2.4552-ls93 #Latest
     container_name: radarr
     hostname: radarr
     depends_on:
@@ -171,7 +171,7 @@ services:
       - home-web
 
   jackett:
-    image: linuxserver/jackett:v0.16.2256-ls7 #Latest
+    image: linuxserver/jackett:v0.17.456-ls19 #Latest
     container_name: jackett
     hostname: jackett
     environment:
@@ -188,7 +188,7 @@ services:
       - home-web
 
   plex:
-    image: linuxserver/plex:1.21.0.3616-d87012962-ls5 #Latest
+    image: linuxserver/plex:1.21.2.3943-a91458577-ls22 #Latest
     container_name: plex
     hostname: plex
     network_mode: host
@@ -208,7 +208,7 @@ services:
 
   pihole:
     container_name: pihole
-    image: pihole/pihole:v5.1.2 #Latest
+    image: pihole/pihole:v5.6 #Latest
     user: "0"
     ports:
       - 53:53/tcp
