@@ -2,7 +2,7 @@ version: "3"
 services:
 
   web:
-    image: nginx:1.19.6 #Latest
+    image: nginx:1.19.9 #Latest
     container_name: web
     hostname: web
     restart: unless-stopped
@@ -14,7 +14,7 @@ services:
       - home-web
 
   homeassistant:
-    image: homeassistant/home-assistant:2021.3.2 #Latest
+    image: homeassistant/home-assistant:2021.3.4 #Latest
     container_name: homeassistant
     hostname: homeassistant 
     network_mode: host
@@ -39,7 +39,7 @@ services:
       - /home/tim/homeassistant/config:/config
 
   deconz:
-    image: marthoc/deconz:amd64-2.09.01 #Latest
+    image: marthoc/deconz:amd64-2.10.04 #Latest
     container_name: deconz
     hostname: deconz 
     network_mode: host
@@ -106,7 +106,7 @@ services:
       - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
 
   transmission:
-    image: linuxserver/transmission:3.00-r2-ls76 #Latest
+    image: linuxserver/transmission:3.00-r2-ls82 #Latest
     container_name: transmission
     hostname: transmission
     environment:
@@ -129,7 +129,7 @@ services:
       - home-web
 
   sonarr:
-    image: linuxserver/sonarr:2.0.0.5344-ls93 #Latest
+    image: linuxserver/sonarr:3.0.6.1196-ls100 #Latest
     container_name: sonarr
     hostname: sonarr
     depends_on:
@@ -150,7 +150,7 @@ services:
       - home-web
   
   radarr:
-    image: linuxserver/radarr:3.0.2.4552-ls93 #Latest
+    image: linuxserver/radarr:3.0.2.4552-ls97 #Latest
     container_name: radarr
     hostname: radarr
     depends_on:
@@ -169,11 +169,24 @@ services:
     restart: unless-stopped
     networks:
       - home-web
+  
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:v1.2.5
+    container_name: flaresolverr
+    environment:
+      - LOG_LEVEL=info
+      - LOG_HTML=false
+      - CAPTCHA_SOLVER=none
+    ports:
+      - 8191:8191
+    restart: unless-stopped
 
   jackett:
-    image: linuxserver/jackett:v0.17.456-ls19 #Latest
+    image: linuxserver/jackett:v0.17.848-ls26 #Latest
     container_name: jackett
     hostname: jackett
+    depends_on:
+      - flaresolverr
     environment:
       - PUID=1000
       - PGID=1000
@@ -188,7 +201,7 @@ services:
       - home-web
 
   plex:
-    image: linuxserver/plex:1.21.2.3943-a91458577-ls22 #Latest
+    image: linuxserver/plex:1.22.1.4275-48e10484b-ls39 #Latest
     container_name: plex
     hostname: plex
     network_mode: host
