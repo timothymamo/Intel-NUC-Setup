@@ -208,7 +208,7 @@ services:
 
   pihole:
     container_name: pihole
-    image: pihole/pihole:v5.6 
+    image: pihole/pihole:v5.8 
     user: "0"
     ports:
       - 53:53/tcp
