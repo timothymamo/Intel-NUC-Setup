@@ -13,22 +13,22 @@
     {
       "matchDatasources": ["docker"],
       "matchPackageNames": ["linuxserver/sonarr"],
-      "versionScheme": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-ls(?<patch>\\d+)?$"
+      "versionScheme": "regex:^3.(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-ls(?\\d+)?$"
     },
     {
       "matchDatasources": ["docker"],
       "matchPackageNames": ["linuxserver/radarr"],
-      "versionScheme": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-ls(?<patch>\\d+)?$"
+      "versionScheme": "regex:^3.(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-ls(?\\d+)?$"
     },
     {
       "matchDatasources": ["docker"],
       "matchPackageNames": ["linuxserver/jackett"],
-      "versionScheme": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-ls(?<patch>\\d+)?$"
+      "versionScheme": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-ls(?\\d+)?$"
     },
     {
       "matchDatasources": ["docker"],
       "matchPackageNames": ["linuxserver/plex"],
-      "versionScheme": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-ls(?<patch>\\d+)?$"
+      "versionScheme": "regex:^1.(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-ls(?\\d+)?$"
     }
   ]
 }
