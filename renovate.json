@@ -6,7 +6,7 @@
   ],
   "packageRules": [
     {
-      "matchDataspources": ["docker"],
+      "matchDatasources": ["docker"],
       "matchPackageNames": ["linuxserver/transmission"],
       "versionScheme": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\-r2-ls(?<patch>\\d+)?$"
     }
