@@ -150,7 +150,7 @@ services:
       - home-web
   
   radarr:
-    image: linuxserver/radarr:3.0.2.4552-ls97
+    image: linuxserver/radarr:3.2.1.5070-ls105
     container_name: radarr
     hostname: radarr
     depends_on:
