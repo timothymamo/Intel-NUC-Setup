@@ -3,5 +3,12 @@
   "prHourlyLimit": 0,
   "extends": [
     "config:base"
+  ],
+  "packageRules": [
+    {
+      "matchDataspources": ["docker"],
+      "matchPackageNames": ["linuxserver/transmission"],
+      "versionScheme": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\-r2-ls(?<patch>\\d+)?$"
+    }
   ]
 }
