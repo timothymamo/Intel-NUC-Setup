@@ -13,12 +13,12 @@
     {
       "matchDatasources": ["docker"],
       "matchPackageNames": ["linuxserver/sonarr"],
-      "versionScheme": "regex:^3.(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-ls(?\\d+)?$"
+      "versionScheme": "regex:^3\\.(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-ls(?\\d+)?$"
     },
     {
       "matchDatasources": ["docker"],
       "matchPackageNames": ["linuxserver/radarr"],
-      "versionScheme": "regex:^3.(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-ls(?\\d+)?$"
+      "versionScheme": "regex:^3\\.(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-ls(?\\d+)?$"
     },
     {
       "matchDatasources": ["docker"],
@@ -28,7 +28,7 @@
     {
       "matchDatasources": ["docker"],
       "matchPackageNames": ["linuxserver/plex"],
-      "versionScheme": "regex:^1.(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-ls(?\\d+)?$"
+      "versionScheme": "regex:^1\\.(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-ls(?\\d+)?$"
     }
   ]
 }
