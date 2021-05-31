@@ -10,5 +10,12 @@
       "matchPackageNames": ["linuxserver/transmission"],
       "versionScheme": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\-r2-ls(?<patch>\\d+)?$"
     }
+  ],
+  "packageRules": [
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["linuxserver/sonarr"],
+      "versionScheme": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)\\-ls(?<patch>\\d+)?$"
+    }
   ]
 }
