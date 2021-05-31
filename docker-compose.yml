@@ -2,7 +2,7 @@ version: "3"
 services:
 
   web:
-    image: nginx:1.20.0
+    image: nginx:1.21.0
     container_name: web
     hostname: web
     restart: unless-stopped
@@ -39,7 +39,7 @@ services:
       - /home/tim/homeassistant/config:/config
 
   deconz:
-    image: marthoc/deconz:amd64-2.10.04 
+    image: marthoc/deconz:2.11.05
     container_name: deconz
     hostname: deconz 
     network_mode: host
@@ -72,7 +72,7 @@ services:
       - 8086:8086
 
   grafana:
-    image: grafana/grafana:7.5.7  
+    image: grafana/grafana:7.5.7
     container_name: grafana
     hostname: grafana
     user: 0:0
@@ -106,7 +106,7 @@ services:
       - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
 
   transmission:
-    image: linuxserver/transmission:3.00-r2-ls82 
+    image: linuxserver/transmission:3.00-r2-ls82
     container_name: transmission
     hostname: transmission
     environment:
@@ -129,7 +129,7 @@ services:
       - home-web
 
   sonarr:
-    image: linuxserver/sonarr:3.0.6.1196-ls100 
+    image: linuxserver/sonarr:3.0.6.1196-ls100
     container_name: sonarr
     hostname: sonarr
     depends_on:
@@ -150,7 +150,7 @@ services:
       - home-web
   
   radarr:
-    image: linuxserver/radarr:3.0.2.4552-ls97 
+    image: linuxserver/radarr:3.0.2.4552-ls97
     container_name: radarr
     hostname: radarr
     depends_on:
@@ -171,7 +171,7 @@ services:
       - home-web
 
   jackett:
-    image: linuxserver/jackett:v0.17.848-ls26 
+    image: linuxserver/jackett:v0.17.848-ls26
     container_name: jackett
     hostname: jackett
     environment:
@@ -188,7 +188,7 @@ services:
       - home-web
 
   plex:
-    image: linuxserver/plex:1.22.1.4275-48e10484b-ls39 
+    image: linuxserver/plex:1.22.1.4275-48e10484b-ls39
     container_name: plex
     hostname: plex
     network_mode: host
@@ -208,7 +208,7 @@ services:
 
   pihole:
     container_name: pihole
-    image: pihole/pihole:v5.8 
+    image: pihole/pihole:v5.8
     user: "0"
     ports:
       - 53:53/tcp
