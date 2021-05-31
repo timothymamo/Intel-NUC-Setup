@@ -171,7 +171,7 @@ services:
       - home-web
 
   jackett:
-    image: linuxserver/jackett:v0.17.848-ls26
+    image: linuxserver/jackett:v0.18.205-ls32
     container_name: jackett
     hostname: jackett
     environment:
