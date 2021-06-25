@@ -87,7 +87,7 @@ services:
       - home-web
 
   telegraf:
-    image: telegraf:1.18.3 
+    image: telegraf:1.19.0 
     container_name: telegraf
     hostname: telegraf
     privileged: true
