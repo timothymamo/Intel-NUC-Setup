@@ -129,7 +129,7 @@ services:
       - home-web
 
   sonarr:
-    image: linuxserver/sonarr:3.0.6.1196-ls100
+    image: linuxserver/sonarr:3.0.6.1265-ls111
     container_name: sonarr
     hostname: sonarr
     depends_on:
