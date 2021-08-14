@@ -39,7 +39,7 @@ services:
       - /home/tim/homeassistant/config:/config
 
   deconz:
-    image: marthoc/deconz:2.12.03
+    image: marthoc/deconz:2.12.05
     container_name: deconz
     hostname: deconz 
     network_mode: host
