@@ -3,9 +3,12 @@ version: '3'
 services:
   traefik:
     image: traefik:v2.5
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api.rule=Host(`traefik.home`)"
+      - "traefik.http.routers.api.entrypoints=http"
+      - "traefik.http.routers.api.service=api@internal"
     container_name: traefik
-    # Enables the web UI and tells Traefik to listen to docker
-    command: --providers.docker
     ports:
       - 80:80
       - 53:53/tcp
