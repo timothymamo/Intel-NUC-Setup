@@ -7,7 +7,11 @@ services:
     # Enables the web UI and tells Traefik to listen to docker
     command: --providers.docker
     ports:
-      - "80:80"
+      - 80:80
+      - 53:53/tcp
+      - 53:53/udp
+      - 67:67/udp
+      - 443:443/tcp
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
@@ -44,7 +48,7 @@ services:
     volumes:
       - /home/tim/homeassistant/config:/config
     ports:
-      - "8123:8123"
+      - 8123:8123
     expose:
       - 8123
 
@@ -234,35 +238,55 @@ services:
       - /tmp/transcoding:/tmp/transcoding
     restart: unless-stopped
 
-    #  pihole:
-    #    image: pihole/pihole:v5.8
-    #    labels:
-    #      - "traefik.http.routers.pihole.rule=Host(`pihole.home`)"
-    #      - "traefik.http.services.homeassistant.loadbalancer.server.port=8380"
-    #    container_name: pihole
-    #    user: "0"
+  pihole:
+    image: pihole/pihole:v5.8
+    labels:
+      - "traefik.enable=true"
+
+      # web interface
+      - "traefik.http.routers.pihole.rule=Host(`pihole.home`)"
+      - "traefik.http.routers.pihole.entrypoints=websecure"
+      - "traefik.http.services.pihole.loadbalancer.server.port=80"
+
+      # Normal DNS coming in on 53 TCP, no TLS
+      - "traefik.tcp.routers.dns.rule=HostSNI(`pihole.home)"
+      - "traefik.tcp.routers.dns.entrypoints=dns"
+      - "traefik.tcp.routers.dns.service=pihole"
+      - "traefik.tcp.services.pihole.loadbalancer.server.port=53"
+
+      # Normal DNS coming in on 53 UDP
+      - "traefik.udp.routers.udpdns.entrypoints=udpdns"
+      - "traefik.udp.routers.udpdns.service=pihole"
+      - "traefik.udp.services.pihole.loadbalancer.server.port=53"
+
+      # Normal DNS coming in on 67 UDP
+      - "traefik.udp.routers.dhcp.entrypoints=udpdhcp"
+      - "traefik.udp.routers.dhcp.service=pihole"
+      - "traefik.udp.services.pihole.loadbalancer.server.port=67"
+    container_name: pihole
+    user: "0"
     #    ports:
     #      - 53:53/tcp
     #      - 53:53/udp
     #      - 67:67/udp
     #      - 8380:80/tcp
     #      - 443:443/tcp
-    #    environment:
-    #      - TZ=Netherlands/Amsterdam
-    #      - WEBPASSWORD=${PIHOLE_PASSWORD}
-    #      - VIRTUAL_PORT=80
-    #      - VIRTUAL_HOST=pihole.home
-    #      - DNS1=1.1.1.1
-    #      - DNS2=1.0.0.1
-    #    volumes:
-    #      - /home/tim/pihole/etc-pihole/:/etc/pihole/
-    #      - /home/tim/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
-    #    dns:
-    #      - 127.0.0.1
-    #      - 1.1.1.1
-    #    restart: unless-stopped
-    #    networks:
-    #      - home
+    environment:
+      - TZ=Netherlands/Amsterdam
+      - WEBPASSWORD=${PIHOLE_PASSWORD}
+      - VIRTUAL_PORT=80
+      - VIRTUAL_HOST=pihole.home
+      - DNS1=1.1.1.1
+      - DNS2=1.0.0.1
+    volumes:
+      - /home/tim/pihole/etc-pihole/:/etc/pihole/
+      - /home/tim/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    restart: unless-stopped
+    networks:
+      - home
 
 networks:
   home:
