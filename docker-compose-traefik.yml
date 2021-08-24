@@ -1,8 +1,9 @@
 version: '3'
 
 services:
-  reverse-proxy:
+  traefik:
     image: traefik:v2.5
+    container_name: traefik
     # Enables the web UI and tells Traefik to listen to docker
     command: --providers.docker
     ports:
