@@ -11,7 +11,7 @@
 
   # [entryPoints.websecure]
   # address = ":443"
-  #   [entryPoints.websecure.tls]
+    # [entryPoints.websecure.tls]
   
   [entryPoints.dns]
     address = ":53"
@@ -21,3 +21,9 @@
   
   [entryPoints.udpdhcp]
     address = ":67/udp"
+
+# [certificatesResolvers.myresolver.acme]
+#   email = "your-email@example.com"
+#   storage = "acme.json"
+#   [certificatesResolvers.myresolver.acme.dnsChallenge]
+#     provider = "gandiv5"

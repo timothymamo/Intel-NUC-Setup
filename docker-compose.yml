@@ -77,6 +77,10 @@ services:
     volumes:
       - /home/tim/deconz/config:/root/.local/share/dresden-elektronik/deCONZ
       - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 8443:8443
+    expose:
+      - 8443
 
   influxdb:
     image: influxdb:1.8.9
