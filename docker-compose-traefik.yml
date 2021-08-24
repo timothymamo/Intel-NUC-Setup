@@ -14,6 +14,7 @@ services:
       - 443:443/tcp
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - /home/tim/docker-compose/traefik.toml:/etc/traefik/traefik.toml
     networks:
       - home
     extra_hosts:

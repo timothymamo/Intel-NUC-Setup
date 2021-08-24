@@ -1,0 +1,18 @@
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    # [entryPoints.http.redirect]
+    # entryPoint = "https"
+
+  [entryPoints.websecure]
+  address = ":443"
+    [entryPoints.websecure.tls]
+  
+  [entryPoints.dns]
+    address = ":53"
+  
+  [entryPoints.udpdns]
+    address = ":53/udp"
+  
+  [entryPoints.udpdhcp]
+    address = ":67/udp"
