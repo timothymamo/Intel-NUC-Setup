@@ -1,3 +1,5 @@
+[providers.docker]
+
 [entryPoints]
   [entryPoints.http]
   address = ":80"
