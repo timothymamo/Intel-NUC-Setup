@@ -234,35 +234,35 @@ services:
       - /tmp/transcoding:/tmp/transcoding
     restart: unless-stopped
 
-  pihole:
-    image: pihole/pihole:v5.8
-    labels:
-      - "traefik.http.routers.pihole.rule=Host(`pihole.home`)"
-      - "traefik.http.services.homeassistant.loadbalancer.server.port=8380"
-    container_name: pihole
-    user: "0"
-    ports:
-      - 53:53/tcp
-      - 53:53/udp
-      - 67:67/udp
-      - 8380:80/tcp
-      - 443:443/tcp
-    environment:
-      - TZ=Netherlands/Amsterdam
-      - WEBPASSWORD=${PIHOLE_PASSWORD}
-      - VIRTUAL_PORT=80
-      - VIRTUAL_HOST=pihole.home
-      - DNS1=1.1.1.1
-      - DNS2=1.0.0.1
-    volumes:
-      - /home/tim/pihole/etc-pihole/:/etc/pihole/
-      - /home/tim/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
-    dns:
-      - 127.0.0.1
-      - 1.1.1.1
-    restart: unless-stopped
-    networks:
-      - home
+    #  pihole:
+    #    image: pihole/pihole:v5.8
+    #    labels:
+    #      - "traefik.http.routers.pihole.rule=Host(`pihole.home`)"
+    #      - "traefik.http.services.homeassistant.loadbalancer.server.port=8380"
+    #    container_name: pihole
+    #    user: "0"
+    #    ports:
+    #      - 53:53/tcp
+    #      - 53:53/udp
+    #      - 67:67/udp
+    #      - 8380:80/tcp
+    #      - 443:443/tcp
+    #    environment:
+    #      - TZ=Netherlands/Amsterdam
+    #      - WEBPASSWORD=${PIHOLE_PASSWORD}
+    #      - VIRTUAL_PORT=80
+    #      - VIRTUAL_HOST=pihole.home
+    #      - DNS1=1.1.1.1
+    #      - DNS2=1.0.0.1
+    #    volumes:
+    #      - /home/tim/pihole/etc-pihole/:/etc/pihole/
+    #      - /home/tim/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
+    #    dns:
+    #      - 127.0.0.1
+    #      - 1.1.1.1
+    #    restart: unless-stopped
+    #    networks:
+    #      - home
 
 networks:
   home:
