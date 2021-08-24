@@ -13,7 +13,7 @@ services:
     networks:
       - home
     extra_hosts:
-      - host.docker.internal:192.168.1.100
+      - host.docker.internal:172.17.0.1
 
   homeassistant:
     image: homeassistant/home-assistant:2021.8.8
@@ -43,6 +43,10 @@ services:
       - /dev/ttyAMA0
     volumes:
       - /home/tim/homeassistant/config:/config
+    ports:
+      - "8123:8123"
+    expose:
+      - 8123
 
   deconz:
     image: marthoc/deconz:2.12.06
@@ -234,6 +238,7 @@ services:
     image: pihole/pihole:v5.8
     labels:
       - "traefik.http.routers.pihole.rule=Host(`pihole.home`)"
+      - "traefik.http.services.homeassistant.loadbalancer.server.port=8380"
     container_name: pihole
     user: "0"
     ports:
