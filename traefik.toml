@@ -4,9 +4,9 @@
     # [entryPoints.http.redirect]
     # entryPoint = "https"
 
-  [entryPoints.websecure]
-  address = ":443"
-    [entryPoints.websecure.tls]
+  # [entryPoints.websecure]
+  # address = ":443"
+  #   [entryPoints.websecure.tls]
   
   [entryPoints.dns]
     address = ":53"
