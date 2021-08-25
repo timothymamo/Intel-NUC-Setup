@@ -1,34 +1,20 @@
-version: '3'
-
+version: "3"
 services:
-  traefik:
-    image: traefik:v2.5.1
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.api.rule=Host(`traefik.home`)"
-      - "traefik.http.routers.api.entrypoints=http"
-      - "traefik.http.routers.api.service=api@internal"
-    container_name: traefik
+
+  web:
+    image: nginx:1.21.1
+    container_name: web
+    hostname: web
+    restart: unless-stopped
+    volumes:
+      - /home/tim/web/nginx/conf.d:/etc/nginx/conf.d
     ports:
       - 80:80
-      - 53:53/tcp
-      - 53:53/udp
-      - 67:67/udp
-      - 443:443/tcp
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /home/tim/docker-compose/traefik.toml:/etc/traefik/traefik.toml
     networks:
-      - home
-    extra_hosts:
-      - host.docker.internal:172.17.0.1
+      - home-web
 
   homeassistant:
     image: homeassistant/home-assistant:2021.8.8
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.homeassistant.rule=Host(`ha.home`)"
-      - "traefik.http.services.homeassistant.loadbalancer.server.port=8123"
     container_name: homeassistant
     hostname: homeassistant 
     network_mode: host
@@ -51,17 +37,9 @@ services:
       - /dev/ttyAMA0
     volumes:
       - /home/tim/homeassistant/config:/config
-    ports:
-      - 8123:8123
-    expose:
-      - 8123
 
   deconz:
     image: marthoc/deconz:2.12.06
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.deconz.rule=Host(`deconz.home`)"
-      - "traefik.http.services.deconz.loadbalancer.server.port=8080"
     container_name: deconz
     hostname: deconz 
     network_mode: host
@@ -71,16 +49,12 @@ services:
       - DECONZ_WS_PORT=8443
       - TZ=Europe/Amsterdam
       - DECONZ_UPNP=0
-      - DECONZ_DEVICE=/dev/ttyACM0
+      - DECONZ_DEVICE=/dev/ttyACM0 
     devices:
      - /dev/ttyACM0
     volumes:
       - /home/tim/deconz/config:/root/.local/share/dresden-elektronik/deCONZ
       - /etc/localtime:/etc/localtime:ro
-    ports:
-      - 8443:8443
-    expose:
-      - 8443
 
   influxdb:
     image: influxdb:1.8.9
@@ -99,8 +73,6 @@ services:
 
   grafana:
     image: grafana/grafana:8.1.2
-    labels:
-      - "traefik.http.routers.grafana.rule=Host(`grafana.home`)"
     container_name: grafana
     hostname: grafana
     user: 0:0
@@ -112,10 +84,10 @@ services:
     ports:
       - 3000:3000
     networks:
-      - home
+      - home-web
 
   telegraf:
-    image: telegraf:1.19.3
+    image: telegraf:1.19.3 
     container_name: telegraf
     hostname: telegraf
     privileged: true
@@ -135,8 +107,6 @@ services:
 
   transmission:
     image: linuxserver/transmission:3.00-r2-ls97
-    labels:
-      - "traefik.http.routers.transmission.rule=Host(`transmission.home`)"
     container_name: transmission
     hostname: transmission
     environment:
@@ -156,12 +126,10 @@ services:
       - 51413:51413/udp
     restart: unless-stopped
     networks:
-      - home
+      - home-web
 
   sonarr:
     image: linuxserver/sonarr:3.0.6.1265-ls111
-    labels:
-      - "traefik.http.routers.sonarr.rule=Host(`sonarr.home`)"
     container_name: sonarr
     hostname: sonarr
     depends_on:
@@ -179,12 +147,10 @@ services:
       - 8989:8989
     restart: unless-stopped
     networks:
-      - home
+      - home-web
   
   radarr:
     image: linuxserver/radarr:3.2.2.5080-ls105
-    labels:
-      - "traefik.http.routers.radarr.rule=Host(`radarr.home`)"
     container_name: radarr
     hostname: radarr
     depends_on:
@@ -202,12 +168,10 @@ services:
       - 7878:7878
     restart: unless-stopped
     networks:
-      - home
+      - home-web
 
   jackett:
     image: linuxserver/jackett:v0.18.587-ls40
-    labels:
-      - "traefik.http.routers.jackett.rule=Host(`jackett.home`)"
     container_name: jackett
     hostname: jackett
     environment:
@@ -221,14 +185,10 @@ services:
       - 9117:9117
     restart: unless-stopped
     networks:
-      - home
+      - home-web
 
   plex:
     image: linuxserver/plex:1.24.0.4930-ab6e1a058-ls68
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.plex.rule=Host(`plex.home`)"
-      - "traefik.http.services.plex.loadbalancer.server.port=32400"
     container_name: plex
     hostname: plex
     network_mode: host
@@ -247,32 +207,15 @@ services:
     restart: unless-stopped
 
   pihole:
-    image: pihole/pihole:v5.8
-    labels:
-      - "traefik.enable=true"
-
-      # web interface
-      - "traefik.http.routers.pihole.rule=Host(`pihole.home`)"
-      - "traefik.http.routers.pihole.entrypoints=http"
-      - "traefik.http.services.pihole.loadbalancer.server.port=80"
-
-      # Normal DNS coming in on 53 TCP, no TLS
-      - "traefik.tcp.routers.dns.rule=HostSNI(`pihole.home`)"
-      - "traefik.tcp.routers.dns.entrypoints=dns"
-      - "traefik.tcp.routers.dns.service=pihole"
-      - "traefik.tcp.services.pihole.loadbalancer.server.port=53"
-
-      # Normal DNS coming in on 53 UDP
-      - "traefik.udp.routers.udpdns.entrypoints=udpdns"
-      - "traefik.udp.routers.udpdns.service=pihole"
-      - "traefik.udp.services.pihole.loadbalancer.server.port=53"
-
-      # Normal DNS coming in on 67 UDP
-      - "traefik.udp.routers.dhcp.entrypoints=udpdhcp"
-      - "traefik.udp.routers.dhcp.service=pihole"
-      - "traefik.udp.services.pihole.loadbalancer.server.port=67"
     container_name: pihole
+    image: pihole/pihole:v5.8
     user: "0"
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+      - 67:67/udp
+      - 8380:80/tcp
+      - 443:443/tcp
     environment:
       - TZ=Netherlands/Amsterdam
       - WEBPASSWORD=${PIHOLE_PASSWORD}
@@ -288,7 +231,7 @@ services:
       - 1.1.1.1
     restart: unless-stopped
     networks:
-      - home
+      - home-web
 
 networks:
-  home:
+  home-web:
