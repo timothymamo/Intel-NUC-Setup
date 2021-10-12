@@ -57,7 +57,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
 
   influxdb:
-    image: influxdb:1.8.9
+    image: influxdb:1.8.10
     container_name: influxdb 
     restart: unless-stopped
     hostname: influxdb
