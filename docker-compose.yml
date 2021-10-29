@@ -2,7 +2,7 @@ version: "3"
 services:
 
   web:
-    image: nginx:1.21.1
+    image: nginx:1.21.3
     container_name: web
     hostname: web
     restart: unless-stopped
@@ -14,7 +14,7 @@ services:
       - home-web
 
   homeassistant:
-    image: homeassistant/home-assistant:2021.8.7
+    image: homeassistant/home-assistant:2021.10.6
     container_name: homeassistant
     hostname: homeassistant 
     network_mode: host
@@ -39,7 +39,7 @@ services:
       - /home/tim/homeassistant/config:/config
 
   deconz:
-    image: marthoc/deconz:2.12.03
+    image: marthoc/deconz:2.13.01
     container_name: deconz
     hostname: deconz 
     network_mode: host
@@ -72,7 +72,7 @@ services:
       - 8086:8086
 
   grafana:
-    image: grafana/grafana:8.1.2
+    image: grafana/grafana:8.2.2
     container_name: grafana
     hostname: grafana
     user: 0:0
@@ -87,7 +87,7 @@ services:
       - home-web
 
   telegraf:
-    image: telegraf:1.19.3 
+    image: telegraf:1.20.2 
     container_name: telegraf
     hostname: telegraf
     privileged: true
@@ -106,7 +106,7 @@ services:
       - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
 
   transmission:
-    image: linuxserver/transmission:3.00-r2-ls97
+    image: linuxserver/transmission:3.00-r2-ls104
     container_name: transmission
     hostname: transmission
     environment:
@@ -129,7 +129,7 @@ services:
       - home-web
 
   sonarr:
-    image: linuxserver/sonarr:3.0.6.1265-ls111
+    image: linuxserver/sonarr:3.0.6.1342-ls126
     container_name: sonarr
     hostname: sonarr
     depends_on:
@@ -171,7 +171,7 @@ services:
       - home-web
 
   jackett:
-    image: linuxserver/jackett:v0.18.606-ls41
+    image: linuxserver/jackett:v0.19.34-ls48
     container_name: jackett
     hostname: jackett
     environment:
@@ -188,7 +188,7 @@ services:
       - home-web
 
   plex:
-    image: linuxserver/plex:1.24.1.4931-1a38e63c6-ls70
+    image: linuxserver/plex:1.24.4.5081-e362dc1ee-ls80
     container_name: plex
     hostname: plex
     network_mode: host
@@ -208,7 +208,7 @@ services:
 
   pihole:
     container_name: pihole
-    image: pihole/pihole:v5.8
+    image: pihole/pihole:2021.10
     user: "0"
     ports:
       - 53:53/tcp
