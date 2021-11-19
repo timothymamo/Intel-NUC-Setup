@@ -39,7 +39,7 @@ services:
       - /home/tim/homeassistant/config:/config
 
   deconz:
-    image: marthoc/deconz:2.13.01
+    image: deconzcommunity/deconz:2.13.02
     container_name: deconz
     hostname: deconz 
     network_mode: host
@@ -53,7 +53,7 @@ services:
     devices:
      - /dev/ttyACM0
     volumes:
-      - /home/tim/deconz/config:/root/.local/share/dresden-elektronik/deCONZ
+      - /home/tim/deconz/config:/opt/deCONZ
       - /etc/localtime:/etc/localtime:ro
 
   influxdb:
