@@ -2,7 +2,7 @@ version: "3"
 services:
 
   web:
-    image: nginx:1.21.3
+    image: nginx:1.21.4
     container_name: web
     hostname: web
     restart: unless-stopped
@@ -14,7 +14,7 @@ services:
       - home-web
 
   homeassistant:
-    image: homeassistant/home-assistant:2021.10.6
+    image: homeassistant/home-assistant:2021.11.3
     container_name: homeassistant
     hostname: homeassistant 
     network_mode: host
@@ -57,22 +57,29 @@ services:
       - /etc/localtime:/etc/localtime:ro
 
   influxdb:
-    image: influxdb:1.8.9
+    image: influxdb:2.1.1
     container_name: influxdb 
     restart: unless-stopped
     hostname: influxdb
     environment:
-      - INFLUXDB_DB=home_assistant
-      - INFLUXDB_USER=${INFLUXDB_USER}
-      - INFLUXDB_USER_PASSWORD=${INFLUXDB_USER_PASSWORD}
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_USER}
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_USER_PASSWORD}
+      - DOCKER_INFLUXDB_INIT_ORG=home
+      - DOCKER_INFLUXDB_INIT_BUCKET=home-assistant
+        #      - INFLUXDB_DB=home_assistant
+        #      - INFLUXDB_USER=${INFLUXDB_USER}
+        #      - INFLUXDB_USER_PASSWORD=${INFLUXDB_USER_PASSWORD}
     volumes:
-      - /home/tim/influxdb:/var/lib/influxdb
-      - /home/tim/influxdb/influxdb.conf:/etc/influxdb/influxdb.conf
+      #      - /home/tim/influxdb:/var/lib/influxdb
+      #      - /home/tim/influxdb.conf:/etc/influxdb/influxdb.conf
+      - /home/tim/influxdb2:/var/lib/influxdb2
+      - /home/tim/influxdb2:/etc/influxdb2
     ports:
       - 8086:8086
 
   grafana:
-    image: grafana/grafana:8.2.2
+    image: grafana/grafana:8.2.3
     container_name: grafana
     hostname: grafana
     user: 0:0
@@ -87,9 +94,10 @@ services:
       - home-web
 
   telegraf:
-    image: telegraf:1.20.2 
+    image: telegraf:1.20.3 
     container_name: telegraf
     hostname: telegraf
+    user: telegraf:998
     privileged: true
     depends_on:
       - influxdb
@@ -99,14 +107,17 @@ services:
     environment:
       - HOST_PROC=/hostfs/proc
       - HOST_MOUNT_PREFIX=/hostfs
-      - TELEGRAF_DB_PASSWORD=${TELEGRAF_DB_PASSWORD}
+        #      - TELEGRAF_DB_PASSWORD=${TELEGRAF_DB_PASSWORD}
+      - TELEGRAF_INFLUXDB_TOKEN=${TELEGRAF_INFLUXDB_TOKEN}
+      - TELEGRAF_INFLUXDB_ORG=${TELEGRAF_INFLUXDB_ORG}
+      - TELEGRAF_INFLUXDB_BUCKET=${TELEGRAF_INFLUXDB_BUCKET}
     volumes:
       - /:/hostfs:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
 
   transmission:
-    image: linuxserver/transmission:3.00-r2-ls104
+    image: linuxserver/transmission:3.00-r2-ls105
     container_name: transmission
     hostname: transmission
     environment:
@@ -171,7 +182,7 @@ services:
       - home-web
 
   jackett:
-    image: linuxserver/jackett:v0.19.34-ls48
+    image: linuxserver/jackett:v0.19.260-ls50
     container_name: jackett
     hostname: jackett
     environment:
@@ -188,7 +199,7 @@ services:
       - home-web
 
   plex:
-    image: linuxserver/plex:1.24.4.5081-e362dc1ee-ls80
+    image: linuxserver/plex:1.24.5.5173-8dcc73a59-ls84
     container_name: plex
     hostname: plex
     network_mode: host
