@@ -14,7 +14,7 @@ services:
       - home-web
 
   homeassistant:
-    image: homeassistant/home-assistant:2021.11.3
+    image: homeassistant/home-assistant:2021.11.5
     container_name: homeassistant
     hostname: homeassistant 
     network_mode: host
