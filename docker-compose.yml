@@ -39,7 +39,7 @@ services:
       - /home/tim/homeassistant/config:/config
 
   deconz:
-    image: deconzcommunity/deconz:2.13.02
+    image: deconzcommunity/deconz:2.13.03
     container_name: deconz
     hostname: deconz 
     network_mode: host
