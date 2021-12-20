@@ -181,6 +181,27 @@ services:
     networks:
       - home-web
 
+  bazarr:
+    image: linuxserver/bazarr:v1.0.1-ls140
+    container_name: bazarr
+    hostname: bazarr
+    depends_on:
+      - jackett
+      - transmission
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /home/tim/bazarr/config:/config
+      - /home/tim/ext-hd/radarr/movies:/movies
+      - /home/tim/ext-hd/sonarr/tvseries:/tv
+    ports:
+      - 6767:6767
+    restart: unless-stopped
+    networks:
+      - home-web
+
   jackett:
     image: linuxserver/jackett:v0.20.184-ls53
     container_name: jackett
