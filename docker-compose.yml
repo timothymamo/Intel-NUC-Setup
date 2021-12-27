@@ -203,7 +203,7 @@ services:
       - home-web
 
   jackett:
-    image: linuxserver/jackett:v0.20.184-ls53
+    image: linuxserver/jackett:v0.20.200-ls54
     container_name: jackett
     hostname: jackett
     environment:
