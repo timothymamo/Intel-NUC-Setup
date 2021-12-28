@@ -126,7 +126,7 @@ services:
       - PASS=${TRANSMISSION_PASSWORD}
     volumes:
       - /home/tim/transmission/data:/config
-      - /home/tim/nas/transmission/downloads:/downloads
+      - /home/tim/nas/media/transmission/downloads:/downloads
       - /home/tim/transmission/watch:/watch
     ports:
       - 9091:9091
@@ -149,8 +149,8 @@ services:
       - TZ=Europe/Amsterdam
     volumes:
       - /home/tim/sonarr/data:/config
-      - /home/tim/nas/sonarr/tvseries:/tv
-      - /home/tim/nas/transmission/downloads:/downloads
+      - /home/tim/nas/media/sonarr/tvseries:/tv
+      - /home/tim/nas/media/transmission/downloads:/downloads
     ports:
       - 8989:8989
     restart: unless-stopped
@@ -170,8 +170,8 @@ services:
       - TZ=Europe/Amsterdam
     volumes:
       - /home/tim/radarr/data:/config
-      - /home/tim/nas/radarr/movies:/movies
-      - /home/tim/nas/transmission/downloads:/downloads
+      - /home/tim/nas/media/radarr/movies:/movies
+      - /home/tim/nas/media/transmission/downloads:/downloads
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -191,8 +191,8 @@ services:
       - TZ=Europe/Amsterdam
     volumes:
       - /home/tim/bazarr/config:/config
-      - /home/tim/nas/radarr/movies:/movies
-      - /home/tim/nas/sonarr/tvseries:/tv
+      - /home/tim/nas/media/radarr/movies:/movies
+      - /home/tim/nas/media/sonarr/tvseries:/tv
     ports:
       - 6767:6767
     restart: unless-stopped
@@ -209,7 +209,7 @@ services:
       - TZ=Europe/Amsterdam
     volumes:
       - /home/tim/jackett/data:/config
-      - /home/tim/nas/transmission/watch:/downloads
+      - /home/tim/nas/media/transmission/watch:/downloads
     ports:
       - 9117:9117
     restart: unless-stopped
@@ -230,8 +230,8 @@ services:
       - VERSION=docker
     volumes:
       - /home/tim/plex/data:/config
-      - /home/tim/nas/sonarr/tvseries:/tv
-      - /home/tim/nas/radarr/movies:/movies
+      - /home/tim/nas/media/sonarr/tvseries:/tv
+      - /home/tim/nas/media/radarr/movies:/movies
       - /tmp/transcoding:/tmp/transcoding
     restart: unless-stopped
 
@@ -252,8 +252,8 @@ services:
       - DNS1=1.1.1.1
       - DNS2=1.0.0.1
     volumes:
-      - /home/tim/pihole/etc-pihole/:/etc/pihole/
-      - /home/tim/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
+      - /home/tim/nas/config/pihole/etc-pihole/:/etc/pihole/
+      - /home/tim/nas/config/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
     dns:
       - 127.0.0.1
       - 1.1.1.1
