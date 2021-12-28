@@ -117,7 +117,7 @@ services:
       - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
 
   transmission:
-    image: linuxserver/transmission:3.00-r2-ls106
+    image: linuxserver/transmission:3.00-r2-ls107
     container_name: transmission
     hostname: transmission
     environment:
