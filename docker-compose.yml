@@ -8,8 +8,11 @@ services:
     restart: unless-stopped
     volumes:
       - /home/tim/web/nginx/conf.d:/etc/nginx/conf.d
+      - /etc/letsencrypt:/etc/nginx/ssl:ro
+      - /etc/ssl/dhparam.pem:/etc/nginx/dhparam/dhparam.pem:ro
     ports:
       - 80:80
+      - 443:443
     networks:
       - home-web
 
@@ -67,12 +70,7 @@ services:
       - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_USER_PASSWORD}
       - DOCKER_INFLUXDB_INIT_ORG=home
       - DOCKER_INFLUXDB_INIT_BUCKET=home-assistant
-        #      - INFLUXDB_DB=home_assistant
-        #      - INFLUXDB_USER=${INFLUXDB_USER}
-        #      - INFLUXDB_USER_PASSWORD=${INFLUXDB_USER_PASSWORD}
     volumes:
-      #      - /home/tim/influxdb:/var/lib/influxdb
-      #      - /home/tim/influxdb.conf:/etc/influxdb/influxdb.conf
       - /home/tim/influxdb2:/var/lib/influxdb2
       - /home/tim/influxdb2:/etc/influxdb2
     ports:
@@ -107,7 +105,6 @@ services:
     environment:
       - HOST_PROC=/hostfs/proc
       - HOST_MOUNT_PREFIX=/hostfs
-        #      - TELEGRAF_DB_PASSWORD=${TELEGRAF_DB_PASSWORD}
       - TELEGRAF_INFLUXDB_TOKEN=${TELEGRAF_INFLUXDB_TOKEN}
       - TELEGRAF_INFLUXDB_ORG=${TELEGRAF_INFLUXDB_ORG}
       - TELEGRAF_INFLUXDB_BUCKET=${TELEGRAF_INFLUXDB_BUCKET}
@@ -247,7 +244,6 @@ services:
       - 53:53/udp
       - 67:67/udp
       - 8380:80/tcp
-      - 443:443/tcp
     environment:
       - TZ=Netherlands/Amsterdam
       - WEBPASSWORD=${PIHOLE_PASSWORD}
