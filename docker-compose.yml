@@ -7,7 +7,7 @@ services:
     hostname: web
     restart: unless-stopped
     volumes:
-      - /home/tim/web/nginx/conf.d:/etc/nginx/conf.d
+      - /home/tim/nas/config/web/nginx/conf.d:/etc/nginx/conf.d
       - /etc/letsencrypt:/etc/nginx/ssl:ro
       - /etc/ssl/dhparam.pem:/etc/nginx/dhparam/dhparam.pem:ro
     ports:
@@ -56,7 +56,7 @@ services:
     devices:
      - /dev/ttyACM0
     volumes:
-      - /home/tim/deconz/config:/opt/deCONZ
+      - /home/tim/nas/config/deconz/config:/opt/deCONZ
       - /etc/localtime:/etc/localtime:ro
 
   influxdb:
@@ -72,7 +72,6 @@ services:
       - DOCKER_INFLUXDB_INIT_BUCKET=home-assistant
     volumes:
       - /home/tim/influxdb2:/var/lib/influxdb2
-      - /home/tim/influxdb2:/etc/influxdb2
     ports:
       - 8086:8086
 
@@ -125,9 +124,9 @@ services:
       - USER=${TRANSMISSION_USERNAME}
       - PASS=${TRANSMISSION_PASSWORD}
     volumes:
-      - /home/tim/transmission/data:/config
+      - /home/tim/nas/config/transmission/data:/config
       - /home/tim/nas/media/transmission/downloads:/downloads
-      - /home/tim/transmission/watch:/watch
+      - /home/tim/nas/media/transmission/watch:/watch
     ports:
       - 9091:9091
       - 51413:51413
@@ -178,27 +177,6 @@ services:
     networks:
       - home-web
 
-  bazarr:
-    image: linuxserver/bazarr:v1.0.1-ls140
-    container_name: bazarr
-    hostname: bazarr
-    depends_on:
-      - jackett
-      - transmission
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Amsterdam
-    volumes:
-      - /home/tim/bazarr/config:/config
-      - /home/tim/nas/media/radarr/movies:/movies
-      - /home/tim/nas/media/sonarr/tvseries:/tv
-    ports:
-      - 6767:6767
-    restart: unless-stopped
-    networks:
-      - home-web
-
   jackett:
     image: linuxserver/jackett:v0.20.200-ls54
     container_name: jackett
@@ -208,7 +186,7 @@ services:
       - PGID=1000
       - TZ=Europe/Amsterdam
     volumes:
-      - /home/tim/jackett/data:/config
+      - /home/tim/nas/config/jackett/data:/config
       - /home/tim/nas/media/transmission/watch:/downloads
     ports:
       - 9117:9117
