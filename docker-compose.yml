@@ -199,7 +199,7 @@ services:
       - PGID=1000
       - TZ=Europe/Amsterdam
     volumes:
-      - /home/tim/nas/config/jackett/data:/config
+      - /home/tim/jackett/data:/config
       - /home/tim/nas/media/transmission/watch:/downloads
     ports:
       - 9117:9117
@@ -246,8 +246,8 @@ services:
       - DNS1=1.1.1.1
       - DNS2=1.0.0.1
     volumes:
-      - /home/tim/nas/config/pihole/etc-pihole/:/etc/pihole/
-      - /home/tim/nas/config/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
+      - /home/tim/pihole/etc-pihole/:/etc/pihole/
+      - /home/tim/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
     dns:
       - 127.0.0.1
       - 1.1.1.1
