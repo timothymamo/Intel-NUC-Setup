@@ -22,11 +22,6 @@
     },
     {
       "matchDatasources": ["docker"],
-      "matchPackageNames": ["linuxserver/bazarr"],
-      "versionScheme": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-ls(\\d+)?$"
-    },
-    {
-      "matchDatasources": ["docker"],
       "matchPackageNames": ["linuxserver/jackett"],
       "versionScheme": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-ls(\\d+)?$"
     },
