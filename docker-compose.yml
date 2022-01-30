@@ -7,7 +7,7 @@ services:
     hostname: web
     restart: unless-stopped
     volumes:
-      - /home/tim/nas/config/web/nginx/conf.d:/etc/nginx/conf.d
+      - /home/tim/web/nginx/conf.d:/etc/nginx/conf.d
       - /etc/letsencrypt:/etc/nginx/ssl:ro
       - /etc/ssl/dhparam.pem:/etc/nginx/dhparam/dhparam.pem:ro
     ports:
@@ -59,7 +59,7 @@ services:
     devices:
      - /dev/ttyACM0
     volumes:
-      - /home/tim/nas/config/deconz/config:/opt/deCONZ
+      - /home/tim/deconz/config:/opt/deCONZ
       - /etc/localtime:/etc/localtime:ro
 
   influxdb:
@@ -133,7 +133,7 @@ services:
       - USER=${TRANSMISSION_USERNAME}
       - PASS=${TRANSMISSION_PASSWORD}
     volumes:
-      - /home/tim/nas/config/transmission/data:/config
+      - /home/tim/transmission/data:/config
       - /home/tim/nas/media/transmission/downloads:/downloads
       - /home/tim/nas/media/transmission/watch:/watch
     ports:
