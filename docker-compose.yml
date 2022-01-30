@@ -2,7 +2,7 @@ version: "3"
 services:
 
   web:
-    image: nginx:1.21.5
+    image: nginx:1.21.6
     container_name: web
     hostname: web
     restart: unless-stopped
@@ -43,7 +43,7 @@ services:
       - /home/tim/homeassistant/config:/config
 
   deconz:
-    image: deconzcommunity/deconz:2.13.04
+    image: deconzcommunity/deconz:2.14.00
     container_name: deconz
     hostname: deconz 
     network_mode: host
@@ -97,7 +97,7 @@ services:
       - home-web
 
   telegraf:
-    image: telegraf:1.21.2 
+    image: telegraf:1.21.3 
     container_name: telegraf
     hostname: telegraf
     user: telegraf:998
@@ -120,7 +120,7 @@ services:
       - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
 
   transmission:
-    image: linuxserver/transmission:3.00-r2-ls108
+    image: linuxserver/transmission:3.00-r2-ls109
     container_name: transmission
     hostname: transmission
     depends_on:
@@ -189,7 +189,7 @@ services:
       - home-web
 
   jackett:
-    image: linuxserver/jackett:v0.20.428-ls55
+    image: linuxserver/jackett:v0.20.485-ls55
     container_name: jackett
     hostname: jackett
     depends_on:
