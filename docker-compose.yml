@@ -145,7 +145,7 @@ services:
       - home-web
 
   sonarr:
-    image: linuxserver/sonarr:3.0.6.1342-ls126
+    image: linuxserver/sonarr:3.0.7.1477-ls136
     container_name: sonarr
     hostname: sonarr
     depends_on:
