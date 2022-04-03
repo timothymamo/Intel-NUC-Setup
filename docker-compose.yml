@@ -229,7 +229,7 @@ services:
 
   pihole:
     container_name: pihole
-    image: pihole/pihole:2022.02.1
+    image: pihole/pihole:2022.04.1
     user: "0"
     ports:
       - 53:53/tcp
