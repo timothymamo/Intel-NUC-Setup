@@ -63,7 +63,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
 
   influxdb:
-    image: influxdb:2.2.0
+    image: influxdb:2.3.0
     container_name: influxdb 
     restart: unless-stopped
     hostname: influxdb
