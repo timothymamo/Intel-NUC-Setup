@@ -24,6 +24,7 @@ services:
       - PGID=1000 
       - TZ=Europe/Amsterdam
       - TOKEN=${DUCKDNS_TOKEN}
+      - SUBDOMAINS=timsdomain
     restart: unless-stopped
 
   homeassistant:
