@@ -16,6 +16,16 @@ services:
     networks:
       - home-web
 
+  duckdns:
+    image: lscr.io/linuxserver/duckdns:latest
+    container_name: duckdns
+    environment:
+      - PUID=1000 
+      - PGID=1000 
+      - TZ=Europe/Amsterdam
+      - TOKEN=${DUCKDNS_TOKEN}
+    restart: unless-stopped
+
   homeassistant:
     image: homeassistant/home-assistant:2022.9.2
     container_name: homeassistant
