@@ -16,8 +16,31 @@ services:
     networks:
       - home-web
 
+  # swag:
+  #   image: lscr.io/linuxserver/swag:1.30.0-ls145
+  #   container_name: swag
+  #   hostname: swag
+  #   restart: unless-stopped
+  #   cap_add:
+  #     - NET_ADMIN
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - TZ=Europe/Amsterdam
+  #     - URL=timsdomain.duckdns.org
+  #     - VALIDATION=duckdns
+  #     - SUBDOMAINS=wildcard
+  #     - DUCKDNSTOKEN=${DUCKDNS_TOKEN}
+  #   volumes:
+  #     - /home/tim/swag:/config
+  #   ports:
+  #     - 443:443
+  #     - 80:80
+  #   networks:
+  #     - home-web
+
   duckdns:
-    image: lscr.io/linuxserver/duckdns:latest
+    image: lscr.io/linuxserver/duckdns:445a951b-ls110
     container_name: duckdns
     environment:
       - PUID=1000 
