@@ -1,21 +1,6 @@
 version: "3"
 services:
 
-# web:
-#   image: nginx:1.23.1
-#   container_name: web
-#   hostname: web
-#   restart: unless-stopped
-#   volumes:
-#     - /home/tim/web/nginx/conf.d:/etc/nginx/conf.d
-#     - /etc/letsencrypt:/etc/nginx/ssl:ro
-#     - /etc/ssl/dhparam.pem:/etc/nginx/dhparam/dhparam.pem:ro
-#   ports:
-#     - 80:80
-#     - 443:443
-#   networks:
-#     - home-web
-
   web:
     image: lscr.io/linuxserver/swag:1.30.0-ls145
     container_name: web
@@ -36,6 +21,19 @@ services:
     ports:
       - 443:443
       - 80:80
+    networks:
+      - home-web
+
+  authelia:
+    image: ghcr.io/authelia/authelia:4.36.7
+    container_name: authelia
+    hostname: authelia
+    restart: unless-stopped
+    user: "1000:1000"
+    environment:
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /home/tim/authelia:/config
     networks:
       - home-web
 
