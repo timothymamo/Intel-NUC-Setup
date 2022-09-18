@@ -1,43 +1,43 @@
 version: "3"
 services:
 
+# web:
+#   image: nginx:1.23.1
+#   container_name: web
+#   hostname: web
+#   restart: unless-stopped
+#   volumes:
+#     - /home/tim/web/nginx/conf.d:/etc/nginx/conf.d
+#     - /etc/letsencrypt:/etc/nginx/ssl:ro
+#     - /etc/ssl/dhparam.pem:/etc/nginx/dhparam/dhparam.pem:ro
+#   ports:
+#     - 80:80
+#     - 443:443
+#   networks:
+#     - home-web
+
   web:
-    image: nginx:1.23.1
+    image: lscr.io/linuxserver/swag:1.30.0-ls145
     container_name: web
     hostname: web
     restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+      - URL=timsdomain.duckdns.org
+      - VALIDATION=duckdns
+      - SUBDOMAINS=wildcard
+      - DUCKDNSTOKEN=${DUCKDNS_TOKEN}
     volumes:
-      - /home/tim/web/nginx/conf.d:/etc/nginx/conf.d
-      - /etc/letsencrypt:/etc/nginx/ssl:ro
-      - /etc/ssl/dhparam.pem:/etc/nginx/dhparam/dhparam.pem:ro
+      - /home/tim/swag:/config
     ports:
-      - 80:80
       - 443:443
+      - 80:80
     networks:
       - home-web
-
-  # swag:
-  #   image: lscr.io/linuxserver/swag:1.30.0-ls145
-  #   container_name: swag
-  #   hostname: swag
-  #   restart: unless-stopped
-  #   cap_add:
-  #     - NET_ADMIN
-  #   environment:
-  #     - PUID=1000
-  #     - PGID=1000
-  #     - TZ=Europe/Amsterdam
-  #     - URL=timsdomain.duckdns.org
-  #     - VALIDATION=duckdns
-  #     - SUBDOMAINS=wildcard
-  #     - DUCKDNSTOKEN=${DUCKDNS_TOKEN}
-  #   volumes:
-  #     - /home/tim/swag:/config
-  #   ports:
-  #     - 443:443
-  #     - 80:80
-  #   networks:
-  #     - home-web
 
   duckdns:
     image: lscr.io/linuxserver/duckdns:445a951b-ls110
