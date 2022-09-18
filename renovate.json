@@ -10,11 +10,11 @@
       "matchPackageNames": ["lscr.io/linuxserver/swag"],
       "versionScheme": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-ls(?<patch>\\d+)?$"
     },
-    {
-      "matchDatasources": ["docker"],
-      "matchPackageNames": ["lscr.io/linuxserver/duckdns"],
-      "versionScheme": "regex:^(?<major>)-ls(?<minor>\\d+)?$"
-    },
+    // {
+    //   "matchDatasources": ["docker"],
+    //   "matchPackageNames": ["lscr.io/linuxserver/duckdns"],
+    //   "versionScheme": "regex:^(?<major>)-ls(?<minor>\\d+)?$"
+    // },
     {
       "matchDatasources": ["docker"],
       "matchPackageNames": ["linuxserver/transmission"],
