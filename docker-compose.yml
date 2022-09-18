@@ -49,6 +49,8 @@ services:
       - TOKEN=${DUCKDNS_TOKEN}
       - SUBDOMAINS=timsdomain
     restart: unless-stopped
+    networks:
+      - home-web
 
   homeassistant:
     image: homeassistant/home-assistant:2022.9.2
