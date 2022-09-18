@@ -28,6 +28,8 @@ services:
     image: ghcr.io/authelia/authelia:4.36.7
     container_name: authelia
     hostname: authelia
+    depends_on:
+      - web
     restart: unless-stopped
     user: "1000:1000"
     environment:
