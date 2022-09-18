@@ -7,6 +7,16 @@
   "packageRules": [
     {
       "matchDatasources": ["docker"],
+      "matchPackageNames": ["lscr.io/linuxserver/swag"],
+      "versionScheme": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-ls(?<patch>\\d+)?$"
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["lscr.io/linuxserver/duckdns"],
+      "versionScheme": "regex:^(?<major>)-ls(?<minor>\\d+)?$"
+    },
+    {
+      "matchDatasources": ["docker"],
       "matchPackageNames": ["linuxserver/transmission"],
       "versionScheme": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)-r2-ls(?<patch>\\d+)?$"
     },
