@@ -28,7 +28,7 @@
     {
       "matchDatasources": ["docker"],
       "matchPackageNames": ["linuxserver/radarr"],
-      "versionScheme": "regex:^3\\.(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-ls(\\d+)?$"
+      "versionScheme": "regex:^nightly-4\\.(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-ls(\\d+)?$"
     },
     {
       "matchDatasources": ["docker"],
