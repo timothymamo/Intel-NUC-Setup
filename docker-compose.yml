@@ -225,7 +225,7 @@ services:
       - home-web
 
   jackett:
-    image: linuxserver/jackett:v0.20.1910-ls76
+    image: linuxserver/jackett:v0.20.2041-ls77
     container_name: jackett
     hostname: jackett
     depends_on:
