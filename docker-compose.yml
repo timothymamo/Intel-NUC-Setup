@@ -79,7 +79,7 @@ services:
       - /home/tim/homeassistant/config:/config
 
   deconz:
-    image: deconzcommunity/deconz:2.18.01
+    image: deconzcommunity/deconz:2.18.02
     container_name: deconz
     hostname: deconz 
     network_mode: host
