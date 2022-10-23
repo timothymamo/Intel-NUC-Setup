@@ -203,7 +203,7 @@ services:
       - home-web
   
   radarr:
-    image: linuxserver/radarr:nightly-4.3.0.6663-ls379
+    image: linuxserver/radarr:nightly-4.3.1.6695-ls388
     container_name: radarr
     hostname: radarr
     depends_on:
