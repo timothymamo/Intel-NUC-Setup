@@ -25,7 +25,7 @@ services:
       - home-web
 
   authelia:
-    image: ghcr.io/authelia/authelia:4.36.9
+    image: ghcr.io/authelia/authelia:4.37.0
     container_name: authelia
     hostname: authelia
     depends_on:
