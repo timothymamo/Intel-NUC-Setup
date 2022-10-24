@@ -60,7 +60,7 @@ services:
     depends_on:
       - web
       - transmission
-      - deconz
+        #      - deconz
       - influxdb
       - grafana
       - telegraf
