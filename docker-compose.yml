@@ -25,7 +25,7 @@ services:
       - home-web
 
   authelia:
-    image: ghcr.io/authelia/authelia:4.37.0
+    image: ghcr.io/authelia/authelia:4.37.2
     container_name: authelia
     hostname: authelia
     depends_on:
@@ -53,7 +53,7 @@ services:
       - home-web
 
   homeassistant:
-    image: homeassistant/home-assistant:2022.10.5
+    image: homeassistant/home-assistant:2022.11.1
     container_name: homeassistant
     hostname: homeassistant 
     network_mode: host
@@ -80,7 +80,7 @@ services:
       - /home/tim/homeassistant/config:/config
 
   influxdb:
-    image: influxdb:2.4.0
+    image: influxdb:2.5.1
     container_name: influxdb 
     restart: unless-stopped
     hostname: influxdb
@@ -98,7 +98,7 @@ services:
       - 8086:8086
 
   grafana:
-    image: grafana/grafana:9.2.1
+    image: grafana/grafana:9.2.3
     container_name: grafana
     hostname: grafana
     user: 0:0
@@ -114,7 +114,7 @@ services:
       - home-web
 
   telegraf:
-    image: telegraf:1.24.2 
+    image: telegraf:1.24.3 
     container_name: telegraf
     hostname: telegraf
     user: telegraf:998
@@ -184,7 +184,7 @@ services:
       - home-web
   
   radarr:
-    image: linuxserver/radarr:nightly-4.3.1.6695-ls388
+    image: linuxserver/radarr:nightly-4.3.1.6736-ls396
     container_name: radarr
     hostname: radarr
     depends_on:
@@ -206,7 +206,7 @@ services:
       - home-web
 
   jackett:
-    image: linuxserver/jackett:v0.20.2142-ls78
+    image: linuxserver/jackett:v0.20.2210-ls81
     container_name: jackett
     hostname: jackett
     depends_on:
