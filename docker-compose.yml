@@ -53,7 +53,7 @@ services:
       - home-web
 
   homeassistant:
-    image: homeassistant/home-assistant:2023.1.2
+    image: homeassistant/home-assistant:2023.1.6
     container_name: homeassistant
     hostname: homeassistant 
     network_mode: host
