@@ -184,7 +184,7 @@ services:
       - home-web
   
   radarr:
-    image: linuxserver/radarr:nightly-4.4.3.6983-ls453
+    image: linuxserver/radarr:nightly-4.4.3.7000-ls454
     container_name: radarr
     hostname: radarr
     depends_on:
