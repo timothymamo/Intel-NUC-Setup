@@ -114,7 +114,7 @@ services:
       - home-web
 
   telegraf:
-    image: telegraf:1.26.1 
+    image: telegraf:1.26.2 
     container_name: telegraf
     hostname: telegraf
     user: telegraf:998
