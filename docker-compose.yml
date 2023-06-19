@@ -2,7 +2,7 @@ version: "3"
 services:
 
   web:
-    image: lscr.io/linuxserver/swag:1.32.0-ls163
+    image: lscr.io/linuxserver/swag:2.6.0-ls219
     container_name: web
     hostname: web
     restart: unless-stopped
@@ -40,7 +40,7 @@ services:
       - home-web
 
   duckdns:
-    image: lscr.io/linuxserver/duckdns:445a951b-ls110
+    image: lscr.io/linuxserver/duckdns:version-45e56094
     container_name: duckdns
     environment:
       - PUID=1000 
@@ -137,7 +137,7 @@ services:
       - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
 
   transmission:
-    image: linuxserver/transmission:3.00-r2-ls111
+    image: linuxserver/transmission:4.0.3
     container_name: transmission
     hostname: transmission
     depends_on:
@@ -162,7 +162,7 @@ services:
       - home-web
 
   sonarr:
-    image: linuxserver/sonarr:3.0.10.1567-ls183
+    image: linuxserver/sonarr:3.0.10
     container_name: sonarr
     hostname: sonarr
     depends_on:
@@ -184,7 +184,7 @@ services:
       - home-web
   
   radarr:
-    image: linuxserver/radarr:nightly-4.6.3.7502-ls475
+    image: linuxserver/radarr:4.6.3-nightly
     container_name: radarr
     hostname: radarr
     depends_on:
@@ -206,7 +206,7 @@ services:
       - home-web
 
   jackett:
-    image: linuxserver/jackett:v0.21.258-ls111
+    image: linuxserver/jackett:0.21.258
     container_name: jackett
     hostname: jackett
     depends_on:
@@ -225,7 +225,7 @@ services:
       - home-web
 
   plex:
-    image: linuxserver/plex:1.32.3.7192-7aa441827-ls173
+    image: linuxserver/plex:1.32.3
     container_name: plex
     hostname: plex
     network_mode: host
