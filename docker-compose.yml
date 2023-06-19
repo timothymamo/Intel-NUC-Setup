@@ -272,5 +272,24 @@ services:
     networks:
       - home-web
 
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:10.8.10
+    container_name: jellyfin
+    depends_on:
+      - web
+      - sonarr
+      - radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Netherlands/Amsterdam
+    volumes:
+      - /home/tim/jellyfin/data:/config
+      - /home/tim/nas/media/sonarr/tvseries:/data/tvshows
+      - /home/tim/nas/media/radarr/movies:/data/movies
+    ports:
+      - 8096:8096
+    restart: unless-stopped
+
 networks:
   home-web:
