@@ -312,6 +312,12 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
+      - MAIL_HOST=${SPEEDTEST_MAIL_HOST}
+      - MAIL_PORT=${SPEEDTEST_MAIL_PORT}
+      - MAIL_USERNAME=${SPEEDTEST_MAIL_USERNAME}
+      - MAIL_PASSWORD=${SPEEDTEST_MAIL_PASSWORD}
+      - MAIL_ENCRYPTION=${SPEEDTEST_MAIL_ENCRYPTION}
+      - MAIL_FROM_ADDRESS=${SPEEDTEST_MAIL_FROM_ADDRESS}
     volumes:
       - /home/tim/speedtest:/config
     restart: unless-stopped
