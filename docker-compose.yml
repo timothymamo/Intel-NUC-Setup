@@ -60,7 +60,6 @@ services:
     depends_on:
       - web
       - transmission
-        #      - deconz
       - influxdb
       - grafana
       - telegraf
@@ -146,7 +145,6 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Amsterdam
-      - TRANSMISSION_WEB_HOME=/combustion-release/
       - USER=${TRANSMISSION_USERNAME}
       - PASS=${TRANSMISSION_PASSWORD}
     volumes:
@@ -289,6 +287,33 @@ services:
       - /home/tim/nas/media/radarr/movies:/data/movies
     ports:
       - 8096:8096
+    restart: unless-stopped
+    networks:
+      - home-web
+
+  jellyseerr:
+    image: fallenbagel/jellyseerr:1.5.0
+    container_name: jellyseerr
+    environment:
+      - TZ=Netherlands/Amsterdam
+    ports:
+      - 5055:5055
+    volumes:
+      - /home/tim/jellyseerr/config:/app/config
+    restart: unless-stopped
+    networks:
+      - home-web
+
+  speedtest-tracker:
+    image: ghcr.io/alexjustesen/speedtest-tracker:latest
+    container_name: speedtest-tracker
+    ports:
+      - 8080:80
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /home/tim/speedtest:/config
     restart: unless-stopped
 
 networks:
