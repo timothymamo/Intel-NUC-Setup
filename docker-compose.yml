@@ -136,7 +136,7 @@ services:
       - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
 
   transmission:
-    image: linuxserver/transmission:4.0.3
+    image: linuxserver/transmission:2021.11.18
     container_name: transmission
     hostname: transmission
     depends_on:
