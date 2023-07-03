@@ -15,10 +15,20 @@
       "matchPackageNames": ["linuxserver/duckdns"],
       "versionScheme": "regex:^(?<major>)-ls(?<minor>\\d+)?$"
     },
-	{
+	  {
       "matchDatasources": ["docker"],
       "matchPackageNames": ["linuxserver/radarr"],
       "versionScheme": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-nightly?$"
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["linuxserver/transmission"],
+      "versionScheme": "regex:^(?<major>\\d)\\.(?<minor>\\d+).(?<patch>\\d+)?$"
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["linuxserver/jellyfin"],
+      "versionScheme": "regex:^(?<major>\\dd)\\.(?<minor>\\d+).(?<patch>\\d+)?$"
     }
   ]
 }
