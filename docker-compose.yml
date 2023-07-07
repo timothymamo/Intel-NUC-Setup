@@ -24,6 +24,35 @@ services:
     networks:
       - home-web
 
+  gluetun:
+    image: ghcr.io/qdm12/gluetun:v3.35.0
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - 8888:8888/tcp # HTTP proxy
+      - 8388:8388/tcp # Shadowsocks
+      - 8388:8388/udp # Shadowsocks
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    volumes:
+      - /home/tim/gluetun:/gluetun
+    environment:
+      - VPN_SERVICE_PROVIDER=nordvpn
+      - VPN_TYPE=wireguard
+      - SERVER_COUNTRIES=Netherlands
+      # Wireguard:
+      - WIREGUARD_PRIVATE_KEY=${NORDVPN_TOKEN}
+      - TZ=Europe/Amsterdam
+      # Server list updater
+      # See https://github.com/qdm12/gluetun-wiki/blob/main/setup/servers.md#update-the-vpn-servers-list
+      - UPDATER_PERIOD=24h
+    networks:
+      - home-web
+
   authelia:
     image: ghcr.io/authelia/authelia:4.37.5
     container_name: authelia
@@ -138,9 +167,6 @@ services:
   transmission:
     image: linuxserver/transmission:4.0.3
     container_name: transmission
-    hostname: transmission
-    depends_on:
-      - web
     environment:
       - PUID=1000
       - PGID=1000
@@ -151,13 +177,8 @@ services:
       - /home/tim/transmission/data:/config
       - /home/tim/nas/media/transmission/downloads:/downloads
       - /home/tim/nas/media/transmission/watch:/watch
-    ports:
-      - 9091:9091
-      - 51413:51413
-      - 51413:51413/udp
     restart: unless-stopped
-    networks:
-      - home-web
+    network_mode: "service:gluetun"
 
   sonarr:
     image: linuxserver/sonarr:3.0.10
