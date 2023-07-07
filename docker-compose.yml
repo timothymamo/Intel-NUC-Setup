@@ -27,6 +27,7 @@ services:
   gluetun:
     image: ghcr.io/qdm12/gluetun:v3.35.0
     container_name: gluetun
+    restart: unless-stopped
     cap_add:
       - NET_ADMIN
     devices:
