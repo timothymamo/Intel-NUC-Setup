@@ -314,7 +314,7 @@ services:
       - home-web
 
   jellyseerr:
-    image: fallenbagel/jellyseerr:1.5.0
+    image: fallenbagel/jellyseerr:1.6.0
     container_name: jellyseerr
     environment:
       - TZ=Netherlands/Amsterdam
