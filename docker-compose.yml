@@ -292,40 +292,6 @@ services:
     networks:
       - home-web
 
-  jellyfin:
-    image: lscr.io/linuxserver/jellyfin:10.8.10
-    container_name: jellyfin
-    depends_on:
-      - web
-      - sonarr
-      - radarr
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Netherlands/Amsterdam
-    volumes:
-      - /home/tim/jellyfin/data:/config
-      - /home/tim/nas/media/sonarr/tvseries:/data/tvshows
-      - /home/tim/nas/media/radarr/movies:/data/movies
-    ports:
-      - 8096:8096
-    restart: unless-stopped
-    networks:
-      - home-web
-
-  jellyseerr:
-    image: fallenbagel/jellyseerr:1.6.0
-    container_name: jellyseerr
-    environment:
-      - TZ=Netherlands/Amsterdam
-    ports:
-      - 5055:5055
-    volumes:
-      - /home/tim/jellyseerr/config:/app/config
-    restart: unless-stopped
-    networks:
-      - home-web
-
   speedtest-tracker:
     image: ghcr.io/alexjustesen/speedtest-tracker:latest
     container_name: speedtest-tracker
