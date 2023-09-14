@@ -292,6 +292,19 @@ services:
     networks:
       - home-web
 
+  jellyseerr:
+    image: fallenbagel/jellyseerr:1.7.0
+    container_name: jellyseerr
+    environment:
+      - TZ=Netherlands/Amsterdam
+    ports:
+      - 5055:5055
+    volumes:
+      - /home/tim/jellyseerr/config:/app/config
+    restart: unless-stopped
+    networks:
+      - home-web
+
   speedtest-tracker:
     image: ghcr.io/alexjustesen/speedtest-tracker:latest
     container_name: speedtest-tracker
