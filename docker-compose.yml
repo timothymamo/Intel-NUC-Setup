@@ -245,7 +245,7 @@ services:
       - home-web
 
   plex:
-    image: linuxserver/plex:1.32.5
+    image: linuxserver/plex:1.32.6
     container_name: plex
     hostname: plex
     network_mode: host
