@@ -143,7 +143,7 @@ services:
       - home-web
 
   telegraf:
-    image: telegraf:1.27.4 
+    image: telegraf:1.28.1 
     container_name: telegraf
     hostname: telegraf
     user: telegraf:998
@@ -226,7 +226,7 @@ services:
       - home-web
 
   jackett:
-    image: linuxserver/jackett:0.21.784
+    image: linuxserver/jackett:0.21.826
     container_name: jackett
     hostname: jackett
     depends_on:
@@ -262,7 +262,7 @@ services:
       - home-web
 
   plex:
-    image: linuxserver/plex:1.32.5
+    image: linuxserver/plex:1.32.6
     container_name: plex
     hostname: plex
     network_mode: host
