@@ -281,6 +281,29 @@ services:
       - /tmp/transcoding:/tmp/transcoding
     restart: unless-stopped
 
+  plex-sk:
+    image: linuxserver/plex:1.32.7
+    container_name: plex-sk
+    hostname: plex-sk
+      #network_mode: host
+    depends_on:
+      - web
+      - sonarr
+      - radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - VERSION=docker
+        #- PLEX_CLAIM=xxxxxxxxxxxxxxxxxxxxxxxxx
+    ports:
+      - 32405:32400
+    volumes:
+      - /home/tim/plex-sk/data:/config
+      - /home/tim/nas/media/sonarr/tvseries:/tv
+      - /home/tim/nas/media/radarr/movies:/movies
+      - /tmp/transcoding:/tmp/transcoding
+    restart: unless-stopped
+
   overseer:
     image: sctx/overseerr:latest
     container_name: overseerr
