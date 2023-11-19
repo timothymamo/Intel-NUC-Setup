@@ -281,6 +281,18 @@ services:
       - /tmp/transcoding:/tmp/transcoding
     restart: unless-stopped
 
+  overseer:
+    image: sctx/overseerr:latest
+    container_name: overseerr
+    environment:
+      - TZ=Europe/Amsterdam
+      - PORT=5055
+    ports:
+      - 5055:5055
+    volumes:
+      - /home/tim/overseer/config:/app/config
+    restart: unless-stopped
+
   pihole:
     container_name: pihole
     image: pihole/pihole:2023.10.0
