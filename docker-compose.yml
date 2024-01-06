@@ -187,7 +187,7 @@ services:
     hostname: sonarr
     depends_on:
       - web
-      - jackett
+      - prowlarr
       - transmission
     environment:
       - PUID=1000
@@ -209,7 +209,7 @@ services:
     hostname: radarr
     depends_on:
       - web
-      - jackett
+      - prowlarr
       - transmission
     environment:
       - PUID=1000
@@ -225,25 +225,25 @@ services:
     networks:
       - home-web
 
-  jackett:
-    image: linuxserver/jackett:0.21.1504
-    container_name: jackett
-    hostname: jackett
-    depends_on:
-      - web
-      - flaresolverr
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Amsterdam
-    volumes:
-      - /home/tim/jackett/data:/config
-      - /home/tim/nas/media/transmission/watch:/downloads
-    ports:
-      - 9117:9117
-    restart: unless-stopped
-    networks:
-      - home-web
+        #  jackett:
+        #    image: linuxserver/jackett:0.21.1504
+        #    container_name: jackett
+        #    hostname: jackett
+        #    depends_on:
+        #      - web
+        #      - flaresolverr
+        #    environment:
+        #      - PUID=1000
+        #      - PGID=1000
+        #      - TZ=Europe/Amsterdam
+        #    volumes:
+        #      - /home/tim/jackett/data:/config
+        #      - /home/tim/nas/media/transmission/watch:/downloads
+        #    ports:
+        #      - 9117:9117
+        #    restart: unless-stopped
+        #    networks:
+        #      - home-web
 
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
