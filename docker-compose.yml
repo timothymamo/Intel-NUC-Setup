@@ -245,6 +245,26 @@ services:
     networks:
       - home-web
 
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    hostname: prowlarr
+    depends_on:
+      - web
+      - flaresolverr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /home/tim/prowlarr/data:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+    networks:
+      - home-web
+
+
   flaresolverr:
     # DockerHub mirror flaresolverr/flaresolverr:latest
     image: ghcr.io/flaresolverr/flaresolverr:latest
