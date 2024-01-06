@@ -324,7 +324,7 @@ services:
       #    restart: unless-stopped
 
   overseer:
-    image: sctx/overseerr:v1.33.2
+    image: sctx/overseerr:1.33.2
     container_name: overseerr
     environment:
       - TZ=Europe/Amsterdam
