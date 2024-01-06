@@ -246,7 +246,7 @@ services:
         #      - home-web
 
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr:latest
+    image: lscr.io/linuxserver/prowlarr:1.12.0-nightly
     container_name: prowlarr
     hostname: prowlarr
     depends_on:
@@ -266,8 +266,7 @@ services:
 
 
   flaresolverr:
-    # DockerHub mirror flaresolverr/flaresolverr:latest
-    image: ghcr.io/flaresolverr/flaresolverr:latest
+    image: ghcr.io/flaresolverr/flaresolverr:v3.3.12
     container_name: flaresolverr
     hostname: flaresolverr
     environment:
@@ -325,7 +324,7 @@ services:
       #    restart: unless-stopped
 
   overseer:
-    image: sctx/overseerr:latest
+    image: sctx/overseerr:v1.33.2
     container_name: overseerr
     environment:
       - TZ=Europe/Amsterdam
@@ -365,7 +364,7 @@ services:
       - home-web
 
   speedtest-tracker:
-    image: ghcr.io/alexjustesen/speedtest-tracker:latest
+    image: ghcr.io/alexjustesen/speedtest-tracker:v0.14.2
     container_name: speedtest-tracker
     ports:
       - 8080:80
