@@ -2,7 +2,7 @@ version: "3"
 services:
 
   web:
-    image: lscr.io/linuxserver/swag:2.6.0-ls219
+    image: lscr.io/linuxserver/swag:2.8.0
     container_name: web
     hostname: web
     restart: unless-stopped
@@ -70,7 +70,7 @@ services:
       - home-web
 
   duckdns:
-    image: lscr.io/linuxserver/duckdns:version-45e56094
+    image: lscr.io/linuxserver/duckdns:version-291c6076
     container_name: duckdns
     environment:
       - PUID=1000 
@@ -225,26 +225,6 @@ services:
     networks:
       - home-web
 
-        #  jackett:
-        #    image: linuxserver/jackett:0.21.1504
-        #    container_name: jackett
-        #    hostname: jackett
-        #    depends_on:
-        #      - web
-        #      - flaresolverr
-        #    environment:
-        #      - PUID=1000
-        #      - PGID=1000
-        #      - TZ=Europe/Amsterdam
-        #    volumes:
-        #      - /home/tim/jackett/data:/config
-        #      - /home/tim/nas/media/transmission/watch:/downloads
-        #    ports:
-        #      - 9117:9117
-        #    restart: unless-stopped
-        #    networks:
-        #      - home-web
-
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:1.12.0-nightly
     container_name: prowlarr
@@ -263,7 +243,6 @@ services:
     restart: unless-stopped
     networks:
       - home-web
-
 
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:v3.3.12
@@ -299,29 +278,6 @@ services:
       - /home/tim/nas/media/radarr/movies:/movies
       - /tmp/transcoding:/tmp/transcoding
     restart: unless-stopped
-
-      #  plex-sk:
-      #    image: linuxserver/plex:1.32.7
-      #    container_name: plex-sk
-      #    hostname: plex-sk
-      #      #network_mode: host
-      #    depends_on:
-      #      - web
-      #      - sonarr
-      #      - radarr
-      #    environment:
-      #      - PUID=1000
-      #      - PGID=1000
-      #      - VERSION=docker
-      #        #- PLEX_CLAIM=xxxxxxxxxxxxxxxxxxxxxxxxx
-      #    ports:
-      #      - 32405:32400
-      #    volumes:
-      #      - /home/tim/plex-sk/data:/config
-      #      - /home/tim/nas/media/sonarr/tvseries:/tv
-      #      - /home/tim/nas/media/radarr/movies:/movies
-      #      - /tmp/transcoding:/tmp/transcoding
-      #    restart: unless-stopped
 
   overseer:
     image: sctx/overseerr:1.33.2
