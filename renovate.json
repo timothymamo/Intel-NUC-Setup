@@ -1,34 +1,23 @@
 {
   "schedule": ["after 10am and before 5pm on sunday"],
   "prHourlyLimit": 0,
-  "extends": [
-    "config:base"
-  ],
-  "packageRules": [
-    {
-      "matchDatasources": ["docker"],
-      "matchPackageNames": ["linuxserver/swag"],
-      "versionScheme": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-ls(?<patch>\\d+)?$"
-    },
-    {
-      "matchDatasources": ["docker"],
-      "matchPackageNames": ["linuxserver/duckdns"],
-      "versionScheme": "regex:^(?<major>)-ls(?<minor>\\d+)?$"
-    },
-	  {
-      "matchDatasources": ["docker"],
-      "matchPackageNames": ["linuxserver/radarr"],
-      "versionScheme": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-nightly?$"
-    },
-    {
-      "matchDatasources": ["docker"],
-      "matchPackageNames": ["linuxserver/transmission"],
-      "versionScheme": "regex:^(?<major>\\d)\\.(?<minor>\\d+).(?<patch>\\d+)?$"
-    },
-    {
-      "matchDatasources": ["docker"],
-      "matchPackageNames": ["linuxserver/jellyfin"],
-      "versionScheme": "regex:^(?<major>\\dd)\\.(?<minor>\\d+).(?<patch>\\d+)?$"
-    }
-  ]
+  "extends": ["config:base"],
+  "packageRules": 
+	[
+		{
+			"matchDatasources": ["docker"],
+			"matchPackageNames": ["linuxserver/duckdns"],
+			"versionScheme": "regex:^version-(?<major>)?$"
+		},
+		{
+			"matchDatasources": ["docker"],
+			"matchPackageNames": ["linuxserver/radarr"],
+			"versionScheme": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-nightly?$"
+		},
+		{
+			"matchDatasources": ["docker"],
+			"matchPackageNames": ["linuxserver/prowlarr"],
+			"versionScheme": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-nightly?$"
+		}
+	]
 }
