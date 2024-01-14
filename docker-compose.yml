@@ -333,6 +333,7 @@ services:
       - MAIL_PASSWORD=${SPEEDTEST_MAIL_PASSWORD}
       - MAIL_ENCRYPTION=${SPEEDTEST_MAIL_ENCRYPTION}
       - MAIL_FROM_ADDRESS=${SPEEDTEST_MAIL_FROM_ADDRESS}
+      - APP_KEY=${SPEEDTEST_APP_KEY}
     volumes:
       - /home/tim/speedtest:/config
     restart: unless-stopped
