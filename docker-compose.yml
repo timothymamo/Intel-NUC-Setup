@@ -36,9 +36,6 @@ services:
       - 8888:8888/tcp # HTTP proxy
       - 8388:8388/tcp # Shadowsocks
       - 8388:8388/udp # Shadowsocks
-      - 9091:9091
-      - 51413:51413
-      - 51413:51413/udp
       - 8090:8090
       - 6881:6881
       - 6881:6881/udp
@@ -92,7 +89,7 @@ services:
     network_mode: host
     depends_on:
       - web
-      - transmission
+      - qbittorrent
       - influxdb
       - grafana
       - telegraf
@@ -168,22 +165,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
 
-  transmission:
-    image: linuxserver/transmission:4.0.5
-    container_name: transmission
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Amsterdam
-      - USER=${TRANSMISSION_USERNAME}
-      - PASS=${TRANSMISSION_PASSWORD}
-    volumes:
-      - /home/tim/transmission/data:/config
-      - /home/tim/nas/media/transmission/downloads:/downloads
-      - /home/tim/nas/media/transmission/watch:/watch
-    restart: unless-stopped
-    network_mode: "service:gluetun"
-
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:4.6.3
     container_name: qbittorrent
@@ -205,7 +186,7 @@ services:
     depends_on:
       - web
       - prowlarr
-      - transmission
+      - qbittorrent
     environment:
       - PUID=1000
       - PGID=1000
@@ -213,7 +194,7 @@ services:
     volumes:
       - /home/tim/sonarr/data:/config
       - /home/tim/nas/media/sonarr/tvseries:/tv
-      - /home/tim/nas/media/transmission/downloads:/downloads
+      - /home/tim/nas/media/qbittorrent/downloads:/downloads
     ports:
       - 8989:8989
     restart: unless-stopped
@@ -227,7 +208,7 @@ services:
     depends_on:
       - web
       - prowlarr
-      - transmission
+      - qbittorrent
     environment:
       - PUID=1000
       - PGID=1000
@@ -235,7 +216,7 @@ services:
     volumes:
       - /home/tim/radarr/data:/config
       - /home/tim/nas/media/radarr/movies:/movies
-      - /home/tim/nas/media/transmission/downloads:/downloads
+      - /home/tim/nas/media/qbittorrent/downloads:/downloads
     ports:
       - 7878:7878
     restart: unless-stopped
