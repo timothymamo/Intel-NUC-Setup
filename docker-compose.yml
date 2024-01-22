@@ -39,6 +39,9 @@ services:
       - 9091:9091
       - 51413:51413
       - 51413:51413/udp
+      - 8090:8090
+      - 6881:6881
+      - 6881:6881/udp
     volumes:
       - /home/tim/gluetun:/gluetun
     environment:
@@ -178,6 +181,20 @@ services:
       - /home/tim/transmission/data:/config
       - /home/tim/nas/media/transmission/downloads:/downloads
       - /home/tim/nas/media/transmission/watch:/watch
+    restart: unless-stopped
+    network_mode: "service:gluetun"
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:4.6.3
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+      - WEBUI_PORT=8090
+    volumes:
+      - /home/tim/qbittorrent/appdata/config:/config
+      - /home/tim/nas/media/qbittorrent/downloads:/downloads
     restart: unless-stopped
     network_mode: "service:gluetun"
 
