@@ -166,7 +166,7 @@ services:
       - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
 
   qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:4.6.3
+    image: lscr.io/linuxserver/qbittorrent:20.04.1
     container_name: qbittorrent
     environment:
       - PUID=1000
