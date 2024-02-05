@@ -174,7 +174,7 @@ services:
       - TZ=Europe/Amsterdam
       - WEBUI_PORT=8090
     volumes:
-      - /home/tim/qbittorrent/appdata/config:/config
+      - /home/tim/qbittorrent/appdata:/config
       - /home/tim/nas/media/qbittorrent/downloads:/downloads
     restart: unless-stopped
     network_mode: "service:gluetun"
