@@ -168,7 +168,7 @@ services:
       - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
 
   deluge:
-    image: lscr.io/linuxserver/deluge:2.1.1
+    image: lscr.io/linuxserver/deluge:18.04.1
     container_name: deluge
     environment:
       - PUID=1000
