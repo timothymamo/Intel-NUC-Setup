@@ -16,11 +16,6 @@
 		},
 		{
 			"matchDatasources": ["docker"],
-			"matchPackageNames": ["linuxserver/prowlarr"],
-			"versionScheme": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-nightly?$"
-		},
-		{
-			"matchDatasources": ["docker"],
 			"matchPackageNames": ["lscr.io/linuxserver/deluge"],
 			"versionScheme": "regex:^(?<major>\\d)\\.(?<minor>\\d+)\\.(?<patch>\\d+)?$"
 		}
