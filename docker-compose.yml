@@ -71,7 +71,7 @@ services:
       - home-web
 
   duckdns:
-    image: lscr.io/linuxserver/duckdns:version-291c6076
+    image: lscr.io/linuxserver/duckdns:version-b14c520a
     container_name: duckdns
     environment:
       - PUID=1000 
@@ -180,21 +180,6 @@ services:
     restart: unless-stopped
     network_mode: "service:gluetun"
 
-
-      #  qbittorrent:
-      #    image: lscr.io/linuxserver/qbittorrent:4.6.3
-      #    container_name: qbittorrent
-      #    environment:
-      #      - PUID=1000
-      #      - PGID=1000
-      #      - TZ=Europe/Amsterdam
-      #      - WEBUI_PORT=8090
-      #    volumes:
-      #      - /home/tim/qbittorrent/appdata:/config
-      #      - /home/tim/nas/media/qbittorrent/downloads:/downloads
-      #    restart: unless-stopped
-      #    network_mode: "service:gluetun"
-
   sonarr:
     image: linuxserver/sonarr:4.0.1
     container_name: sonarr
@@ -244,7 +229,7 @@ services:
       - home-web
 
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr:1.12.0-nightly
+    image: lscr.io/linuxserver/prowlarr:1.13.3
     container_name: prowlarr
     hostname: prowlarr
     depends_on:
