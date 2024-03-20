@@ -56,7 +56,7 @@ services:
       - home-web
 
   authelia:
-    image: ghcr.io/authelia/authelia:4.37.5
+    image: ghcr.io/authelia/authelia:4.38.6
     container_name: authelia
     hostname: authelia
     depends_on:
@@ -71,7 +71,7 @@ services:
       - home-web
 
   duckdns:
-    image: lscr.io/linuxserver/duckdns:version-b14c520a
+    image: lscr.io/linuxserver/duckdns:version-efb84274
     container_name: duckdns
     environment:
       - PUID=1000 
@@ -229,7 +229,7 @@ services:
       - home-web
 
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr:1.13.3
+    image: lscr.io/linuxserver/prowlarr:1.14.3
     container_name: prowlarr
     hostname: prowlarr
     depends_on:
@@ -263,7 +263,7 @@ services:
       - home-web
 
   plex:
-    image: linuxserver/plex:1.40.0
+    image: linuxserver/plex:1.40.1
     container_name: plex
     hostname: plex
     network_mode: host
@@ -323,7 +323,7 @@ services:
       - home-web
 
   speedtest-tracker:
-    image: ghcr.io/alexjustesen/speedtest-tracker:v0.18.2
+    image: ghcr.io/alexjustesen/speedtest-tracker:v0.18.3
     container_name: speedtest-tracker
     ports:
       - 8080:80
