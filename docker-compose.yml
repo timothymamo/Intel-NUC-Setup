@@ -167,6 +167,7 @@ services:
       - /:/hostfs:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+
   transmission:
     image: linuxserver/transmission:4.0.5
     container_name: transmission
