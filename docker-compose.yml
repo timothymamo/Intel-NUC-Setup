@@ -36,8 +36,10 @@ services:
       - 8888:8888/tcp # HTTP proxy
       - 8388:8388/tcp # Shadowsocks
       - 8388:8388/udp # Shadowsocks
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
       - 8090:8090
-      - 8112:8112
       - 6881:6881
       - 6881:6881/udp
     volumes:
@@ -90,8 +92,7 @@ services:
     network_mode: host
     depends_on:
       - web
-        #- qbittorrent
-      - deluge
+      - transmission
       - influxdb
       - grafana
       - telegraf
@@ -166,17 +167,19 @@ services:
       - /:/hostfs:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-
-  deluge:
-    image: lscr.io/linuxserver/deluge:2.1.1
-    container_name: deluge
+  transmission:
+    image: linuxserver/transmission:4.0.5
+    container_name: transmission
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Amsterdam
+      - USER=${TRANSMISSION_USERNAME}
+      - PASS=${TRANSMISSION_PASSWORD}
     volumes:
-      - /home/tim/deluge/config:/config
-      - /home/tim/nas/media/deluge/downloads:/downloads
+      - /home/tim/transmission/data:/config
+      - /home/tim/nas/media/torrents/downloads:/downloads
+      - /home/tim/nas/media/torrents/watch:/watch
     restart: unless-stopped
     network_mode: "service:gluetun"
 
@@ -187,8 +190,7 @@ services:
     depends_on:
       - web
       - prowlarr
-        #- qbittorrent
-      - deluge
+      - transmission
     environment:
       - PUID=1000
       - PGID=1000
@@ -196,8 +198,7 @@ services:
     volumes:
       - /home/tim/sonarr/data:/config
       - /home/tim/nas/media/sonarr/tvseries:/tv
-        #- /home/tim/nas/media/qbittorrent/downloads:/downloads
-      - /home/tim/nas/media/deluge/downloads:/downloads
+      - /home/tim/nas/media/torrents/downloads:/downloads
     ports:
       - 8989:8989
     restart: unless-stopped
@@ -211,8 +212,7 @@ services:
     depends_on:
       - web
       - prowlarr
-        #- qbittorrent
-      - deluge
+      - transmission
     environment:
       - PUID=1000
       - PGID=1000
@@ -220,8 +220,7 @@ services:
     volumes:
       - /home/tim/radarr/data:/config
       - /home/tim/nas/media/radarr/movies:/movies
-        #- /home/tim/nas/media/qbittorrent/downloads:/downloads
-      - /home/tim/nas/media/deluge/downloads:/downloads
+      - /home/tim/nas/media/torrents/downloads:/downloads
     ports:
       - 7878:7878
     restart: unless-stopped
