@@ -169,7 +169,7 @@ services:
       - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
 
   transmission:
-    image: linuxserver/transmission:4.0.5
+    image: linuxserver/transmission:2021.11.18
     container_name: transmission
     environment:
       - PUID=1000
