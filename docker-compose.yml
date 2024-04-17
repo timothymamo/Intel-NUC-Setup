@@ -1,4 +1,3 @@
-version: "3"
 services:
 
   web:
@@ -73,7 +72,7 @@ services:
       - home-web
 
   duckdns:
-    image: lscr.io/linuxserver/duckdns:version-efb84274
+    image: lscr.io/linuxserver/duckdns:cf3b81f0-ls16
     container_name: duckdns
     environment:
       - PUID=1000 
