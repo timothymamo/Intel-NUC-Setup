@@ -112,7 +112,7 @@ services:
       - /home/tim/homeassistant/config:/config
 
   influxdb:
-    image: influxdb:2.7.5
+    image: influxdb:2.7.6
     container_name: influxdb 
     restart: unless-stopped
     hostname: influxdb
