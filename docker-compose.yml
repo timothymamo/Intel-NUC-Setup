@@ -247,7 +247,7 @@ services:
       - home-web
 
   flaresolverr:
-    image: ghcr.io/flaresolverr/flaresolverr:v3.3.17
+    image: ghcr.io/flaresolverr/flaresolverr:v3.3.19
     container_name: flaresolverr
     hostname: flaresolverr
     environment:
