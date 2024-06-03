@@ -72,7 +72,7 @@ services:
       - home-web
 
   duckdns:
-    image: lscr.io/linuxserver/duckdns:cf3b81f0-ls16
+    image: lscr.io/linuxserver/duckdns:72e081dd-ls20
     container_name: duckdns
     environment:
       - PUID=1000 
@@ -282,7 +282,7 @@ services:
     restart: unless-stopped
 
   overseer:
-    image: sctx/overseerr:1.33.2
+    image: linuxserver/overseerr:1.33.2
     container_name: overseerr
     environment:
       - TZ=Europe/Amsterdam
