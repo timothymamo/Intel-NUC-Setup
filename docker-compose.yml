@@ -85,7 +85,7 @@ services:
       - home-web
 
   homeassistant:
-    image: ghcr.io/home-assistant/home-assistant:2024.5.5
+    image: ghcr.io/home-assistant/home-assistant:2024.6.1
     container_name: homeassistant
     hostname: homeassistant 
     network_mode: host
