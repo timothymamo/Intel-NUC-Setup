@@ -1,7 +1,7 @@
 services:
 
   web:
-    image: lscr.io/linuxserver/swag:2.10.0
+    image: lscr.io/linuxserver/swag:2.11.0
     container_name: web
     hostname: web
     restart: unless-stopped
