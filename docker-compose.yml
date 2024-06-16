@@ -57,7 +57,7 @@ services:
       - home-web
 
   authelia:
-    image: ghcr.io/authelia/authelia:v4.38.9
+    image: ghcr.io/authelia/authelia:4.38.9
     container_name: authelia
     hostname: authelia
     depends_on:
@@ -322,7 +322,7 @@ services:
       - home-web
 
   speedtest-tracker:
-    image: ghcr.io/alexjustesen/speedtest-tracker:v0.20.6
+    image: linuxserver/speedtest-tracker:0.20.6
     container_name: speedtest-tracker
     ports:
       - 8080:80
