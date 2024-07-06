@@ -329,6 +329,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
+      - TZ=Europe/Amsterdam
       - MAIL_HOST=${SPEEDTEST_MAIL_HOST}
       - MAIL_PORT=${SPEEDTEST_MAIL_PORT}
       - MAIL_USERNAME=${SPEEDTEST_MAIL_USERNAME}
@@ -336,6 +337,10 @@ services:
       - MAIL_ENCRYPTION=${SPEEDTEST_MAIL_ENCRYPTION}
       - MAIL_FROM_ADDRESS=${SPEEDTEST_MAIL_FROM_ADDRESS}
       - APP_KEY=${SPEEDTEST_APP_KEY}
+      - DB_CONNECTION=sqlite
+      - SPEEDTEST_SCHEDULE="0 */6 * * *"
+      - SPEEDTEST_SERVERS="49730,61186"
+      - PRUNE_RESULTS_OLDER_THAN=120
     volumes:
       - /home/tim/speedtest:/config
     restart: unless-stopped
