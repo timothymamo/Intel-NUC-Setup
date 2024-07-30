@@ -71,18 +71,18 @@ services:
     networks:
       - home-web
 
-  duckdns:
-    image: lscr.io/linuxserver/duckdns:245f78ab-ls26
-    container_name: duckdns
-    environment:
-      - PUID=1000 
-      - PGID=1000 
-      - TZ=Europe/Amsterdam
-      - TOKEN=${DUCKDNS_TOKEN}
-      - SUBDOMAINS=timsdomain
-    restart: unless-stopped
-    networks:
-      - home-web
+        #  duckdns:
+        #    image: lscr.io/linuxserver/duckdns:245f78ab-ls26
+        #    container_name: duckdns
+        #    environment:
+        #      - PUID=1000 
+        #      - PGID=1000 
+        #      - TZ=Europe/Amsterdam
+        #      - TOKEN=${DUCKDNS_TOKEN}
+        #      - SUBDOMAINS=timsdomain
+        #    restart: unless-stopped
+        #    networks:
+        #      - home-web
 
   homeassistant:
     image: ghcr.io/home-assistant/home-assistant:2024.7.3
