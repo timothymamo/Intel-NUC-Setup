@@ -72,7 +72,7 @@ services:
       - home-web
 
   duckdns:
-    image: lscr.io/linuxserver/duckdns:72e081dd-ls20
+    image: lscr.io/linuxserver/duckdns:245f78ab-ls26
     container_name: duckdns
     environment:
       - PUID=1000 
