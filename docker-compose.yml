@@ -23,6 +23,22 @@ services:
     networks:
       - home-web
 
+  authelia:
+    container_name: 'authelia'
+    image: ghcr.io/authelia/authelia:4.38.10
+    restart: unless-stopped
+    user: "1000:1000"
+    depends_on:
+      - web
+    expose:
+      - 9091
+    volumes:
+      - /home/tim/authelia:/config
+    networks:
+      - home-web
+    environment:
+      TZ: 'Europe/Amsterdam'
+
   gluetun:
     image: ghcr.io/qdm12/gluetun:v3.38.0
     container_name: gluetun
@@ -55,34 +71,6 @@ services:
       - UPDATER_PERIOD=24h
     networks:
       - home-web
-
-  authelia:
-    image: ghcr.io/authelia/authelia:4.38.10
-    container_name: authelia
-    hostname: authelia
-    depends_on:
-      - web
-    restart: unless-stopped
-    user: "1000:1000"
-    environment:
-      - TZ=Europe/Amsterdam
-    volumes:
-      - /home/tim/authelia:/config
-    networks:
-      - home-web
-
-        #  duckdns:
-        #    image: lscr.io/linuxserver/duckdns:245f78ab-ls26
-        #    container_name: duckdns
-        #    environment:
-        #      - PUID=1000 
-        #      - PGID=1000 
-        #      - TZ=Europe/Amsterdam
-        #      - TOKEN=${DUCKDNS_TOKEN}
-        #      - SUBDOMAINS=timsdomain
-        #    restart: unless-stopped
-        #    networks:
-        #      - home-web
 
   homeassistant:
     image: ghcr.io/home-assistant/home-assistant:2024.7.4
@@ -223,6 +211,23 @@ services:
       - /home/tim/nas/media/torrents/downloads:/downloads
     ports:
       - 7878:7878
+    restart: unless-stopped
+    networks:
+      - home-web
+
+  readarr:
+    image: lscr.io/linuxserver/readarr:nightly-version-0.4.0.2593
+    container_name: readarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /home/tim/readarr/data:/config
+      - /home/tim/nas/media/readarr/books:/books
+      - /home/tim/nas/media/torrents/downloads:/downloads
+    ports:
+      - 8787:8787
     restart: unless-stopped
     networks:
       - home-web
