@@ -34,10 +34,10 @@ services:
       - 9091
     volumes:
       - /home/tim/authelia:/config
-    networks:
-      - home-web
     environment:
       TZ: 'Europe/Amsterdam'
+    networks:
+      - home-web
 
   gluetun:
     image: ghcr.io/qdm12/gluetun:v3.38.0
@@ -76,7 +76,6 @@ services:
     image: ghcr.io/home-assistant/home-assistant:2024.7.4
     container_name: homeassistant
     hostname: homeassistant 
-    network_mode: host
     depends_on:
       - web
       - transmission
@@ -97,6 +96,7 @@ services:
       - /dev/ttyACM0
     volumes:
       - /home/tim/homeassistant/config:/config
+    network_mode: host
 
   influxdb:
     image: influxdb:2.7.8
@@ -270,7 +270,6 @@ services:
     image: linuxserver/plex:1.40.4
     container_name: plex
     hostname: plex
-    network_mode: host
     depends_on:
       - web
       - sonarr
@@ -285,8 +284,9 @@ services:
       - /home/tim/nas/media/radarr/movies:/movies
       - /tmp/transcoding:/tmp/transcoding
     restart: unless-stopped
+    network_mode: host
 
-  overseer:
+  overseerr:
     image: linuxserver/overseerr:1.33.2
     container_name: overseerr
     environment:
@@ -295,8 +295,10 @@ services:
     ports:
       - 5055:5055
     volumes:
-      - /home/tim/overseer/config:/app/config
+      - /home/tim/overseerr/config:/app/config
     restart: unless-stopped
+    networks:
+      - home-web
 
   pihole:
     container_name: pihole
@@ -349,6 +351,8 @@ services:
     volumes:
       - /home/tim/speedtest:/config
     restart: unless-stopped
+    networks:
+      - home-web
 
 networks:
   home-web:
