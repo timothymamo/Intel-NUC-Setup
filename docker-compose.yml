@@ -55,6 +55,7 @@ services:
       - 51413:51413
       - 51413:51413/udp
       - 8090:8090
+      - 6789:6789
       - 6881:6881
       - 6881:6881/udp
     volumes:
@@ -168,6 +169,21 @@ services:
       - /home/tim/transmission/data:/config
       - /home/tim/nas/media/torrents/downloads:/downloads
       - /home/tim/nas/media/torrents/watch:/watch
+    restart: unless-stopped
+    network_mode: "service:gluetun"
+
+  nzbget:
+    image: lscr.io/linuxserver/nzbget:24.3.20241004
+    container_name: nzbget
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - NZBGET_USER=${TRANSMISSION_USERNAME}
+      - NZBGET_PASS=${TRANSMISSION_PASSWORD}
+    volumes:
+      - /home/tim/nzbget/data:/config
+      - /home/tim/nas/media/nzbget/downloads:/downloads
     restart: unless-stopped
     network_mode: "service:gluetun"
 
