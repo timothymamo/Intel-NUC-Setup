@@ -16,7 +16,7 @@ services:
       - SUBDOMAINS=wildcard
       - DUCKDNSTOKEN=${DUCKDNS_TOKEN}
     volumes:
-      - /home/tim/swag:/config
+      - /home/tim/config/swag:/config
     ports:
       - 443:443
       - 80:80
@@ -33,7 +33,7 @@ services:
     expose:
       - 9091
     volumes:
-      - /home/tim/authelia:/config
+      - /home/tim/config/authelia:/config
     environment:
       TZ: 'Europe/Amsterdam'
     networks:
@@ -59,7 +59,7 @@ services:
       - 6881:6881
       - 6881:6881/udp
     volumes:
-      - /home/tim/gluetun:/gluetun
+      - /home/tim/config/gluetun:/gluetun
     environment:
       - VPN_SERVICE_PROVIDER=nordvpn
       - VPN_TYPE=wireguard
@@ -96,7 +96,7 @@ services:
       - /dev/ttyAMA0
       - /dev/ttyACM0
     volumes:
-      - /home/tim/homeassistant/config:/config
+      - /home/tim/config/homeassistant:/config
     network_mode: host
 
   influxdb:
@@ -113,7 +113,7 @@ services:
       - DOCKER_INFLUXDB_INIT_ORG=home
       - DOCKER_INFLUXDB_INIT_BUCKET=home-assistant
     volumes:
-      - /home/tim/influxdb2:/var/lib/influxdb2
+      - /home/tim/config/influxdb2:/var/lib/influxdb2
     ports:
       - 8086:8086
 
@@ -127,7 +127,7 @@ services:
       - telegraf
     restart: unless-stopped
     volumes:
-      - /home/tim/grafana:/var/lib/grafana
+      - /home/tim/config/grafana:/var/lib/grafana
     ports:
       - 3000:3000
     networks:
@@ -166,9 +166,8 @@ services:
       - USER=${TRANSMISSION_USERNAME}
       - PASS=${TRANSMISSION_PASSWORD}
     volumes:
-      - /home/tim/transmission/data:/config
-      - /home/tim/nas/media/torrents/downloads:/downloads
-      - /home/tim/nas/media/torrents/watch:/watch
+      - /home/tim/config/transmission:/config
+      - /home/tim/nas/data/torrents:/data/torrents
     restart: unless-stopped
     network_mode: "service:gluetun"
 
@@ -182,8 +181,8 @@ services:
       - NZBGET_USER=${TRANSMISSION_USERNAME}
       - NZBGET_PASS=${TRANSMISSION_PASSWORD}
     volumes:
-      - /home/tim/nzbget/data:/config
-      - /home/tim/nas/media/nzbget/downloads:/downloads
+      - /home/tim/config/nzbget:/config
+      - /home/tim/nas/data/usenet:/data/usenet
     restart: unless-stopped
     network_mode: "service:gluetun"
 
@@ -200,9 +199,8 @@ services:
       - PGID=1000
       - TZ=Europe/Amsterdam
     volumes:
-      - /home/tim/sonarr/data:/config
-      - /home/tim/nas/media/sonarr/tvseries:/tv
-      - /home/tim/nas/media/torrents/downloads:/downloads
+      - /home/tim/config/sonarr:/config
+      - /home/tim/nas/data:/data
     ports:
       - 8989:8989
     restart: unless-stopped
@@ -222,9 +220,8 @@ services:
       - PGID=1000
       - TZ=Europe/Amsterdam
     volumes:
-      - /home/tim/radarr/data:/config
-      - /home/tim/nas/media/radarr/movies:/movies
-      - /home/tim/nas/media/torrents/downloads:/downloads
+      - /home/tim/config/radarr:/config
+      - /home/tim/nas/data:/data
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -239,9 +236,8 @@ services:
       - PGID=1000
       - TZ=Europe/Amsterdam
     volumes:
-      - /home/tim/readarr/data:/config
-      - /home/tim/nas/media/readarr/books:/books
-      - /home/tim/nas/media/torrents/downloads:/downloads
+      - /home/tim/config/readarr:/config
+      - /home/tim/nas/data:/data
     ports:
       - 8787:8787
     restart: unless-stopped
@@ -260,7 +256,7 @@ services:
       - PGID=1000
       - TZ=Europe/Amsterdam
     volumes:
-      - /home/tim/prowlarr/data:/config
+      - /home/tim/config/prowlarr:/config
     ports:
       - 9696:9696
     restart: unless-stopped
@@ -295,9 +291,8 @@ services:
       - PGID=1000
       - VERSION=docker
     volumes:
-      - /home/tim/plex/data:/config
-      - /home/tim/nas/media/sonarr/tvseries:/tv
-      - /home/tim/nas/media/radarr/movies:/movies
+      - /home/tim/config/plex:/config
+      - /home/tim/nas/data/media:/data/media
       - /tmp/transcoding:/tmp/transcoding
     restart: unless-stopped
     network_mode: host
@@ -311,7 +306,7 @@ services:
     ports:
       - 5055:5055
     volumes:
-      - /home/tim/overseerr/config:/app/config
+      - /home/tim/config/overseerr:/app/config
     restart: unless-stopped
     networks:
       - home-web
@@ -365,7 +360,7 @@ services:
       - SPEEDTEST_SERVERS="49730,61186"
       - PRUNE_RESULTS_OLDER_THAN=120
     volumes:
-      - /home/tim/speedtest:/config
+      - /home/tim/config/speedtest:/config
     restart: unless-stopped
     networks:
       - home-web
