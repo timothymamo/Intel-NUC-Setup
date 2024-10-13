@@ -76,7 +76,7 @@ services:
       - home-web
 
   homeassistant:
-    image: ghcr.io/home-assistant/home-assistant:2024.10.1
+    image: ghcr.io/home-assistant/home-assistant:2024.10.2
     container_name: homeassistant
     hostname: homeassistant 
     depends_on:
@@ -136,7 +136,7 @@ services:
       - home-web
 
   telegraf:
-    image: telegraf:1.32.0 
+    image: telegraf:1.32.1 
     container_name: telegraf
     hostname: telegraf
     user: telegraf:998
@@ -174,7 +174,7 @@ services:
     network_mode: "service:gluetun"
 
   nzbget:
-    image: lscr.io/linuxserver/nzbget:24.3.20241004
+    image: lscr.io/linuxserver/nzbget:24.3.20241011
     container_name: nzbget
     environment:
       - PUID=1000
@@ -210,7 +210,7 @@ services:
       - home-web
   
   radarr:
-    image: linuxserver/radarr:5.12.2-nightly
+    image: linuxserver/radarr:5.13.0-nightly
     container_name: radarr
     hostname: radarr
     depends_on:
@@ -247,7 +247,7 @@ services:
       - home-web
 
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr:1.25.2-nightly
+    image: lscr.io/linuxserver/prowlarr:1.25.3-nightly
     container_name: prowlarr
     hostname: prowlarr
     depends_on:
@@ -342,7 +342,7 @@ services:
       - home-web
 
   speedtest-tracker:
-    image: linuxserver/speedtest-tracker:0.21.2
+    image: linuxserver/speedtest-tracker:0.21.4
     container_name: speedtest-tracker
     ports:
       - 8080:80
