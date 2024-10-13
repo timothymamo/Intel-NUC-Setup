@@ -15,11 +15,13 @@ services:
       - VALIDATION=duckdns
       - SUBDOMAINS=wildcard
       - DUCKDNSTOKEN=${DUCKDNS_TOKEN}
+      - DOCKER_MODS=linuxserver/mods:swag-dashboard|linuxserver/mods:swag-dbip
     volumes:
       - /home/tim/config/swag:/config
     ports:
       - 443:443
       - 80:80
+      - 81:81
     networks:
       - home-web
 
