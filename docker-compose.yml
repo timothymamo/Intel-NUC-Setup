@@ -208,7 +208,7 @@ services:
       - home-web
   
   radarr:
-    image: linuxserver/radarr:5.12.2-nightly
+    image: linuxserver/radarr:5.13.0-nightly
     container_name: radarr
     hostname: radarr
     depends_on:
