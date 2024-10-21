@@ -76,7 +76,7 @@ services:
       - home-web
 
   homeassistant:
-    image: ghcr.io/home-assistant/home-assistant:2024.10.2
+    image: ghcr.io/home-assistant/home-assistant:2024.10.3
     container_name: homeassistant
     hostname: homeassistant 
     depends_on:
