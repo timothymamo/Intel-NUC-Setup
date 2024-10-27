@@ -120,7 +120,7 @@ services:
       - 8086:8086
 
   grafana:
-    image: grafana/grafana:11.2.2
+    image: grafana/grafana:11.3.0
     container_name: grafana
     hostname: grafana
     user: 0:0
