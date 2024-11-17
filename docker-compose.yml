@@ -281,7 +281,7 @@ services:
       - home-web
 
   plex:
-    image: linuxserver/plex:1.41.1
+    image: linuxserver/plex:1.41.2
     container_name: plex
     hostname: plex
     depends_on:
