@@ -174,7 +174,7 @@ services:
     network_mode: "service:gluetun"
 
   nzbget:
-    image: lscr.io/linuxserver/nzbget:24.4.20241122
+    image: lscr.io/linuxserver/nzbget:24.5.20241208
     container_name: nzbget
     environment:
       - PUID=1000
