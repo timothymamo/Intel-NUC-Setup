@@ -231,7 +231,7 @@ services:
       - home-web
 
   readarr:
-    image: lscr.io/linuxserver/readarr:0.4.5-nightly
+    image: lscr.io/linuxserver/readarr:0.4.7-nightly
     container_name: readarr
     environment:
       - PUID=1000
