@@ -42,7 +42,7 @@ services:
       - home-web
 
   gluetun:
-    image: ghcr.io/qdm12/gluetun:v3.39.1
+    image: ghcr.io/qdm12/gluetun:v3.40.0
     container_name: gluetun
     restart: unless-stopped
     cap_add:
