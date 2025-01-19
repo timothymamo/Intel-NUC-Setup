@@ -342,7 +342,7 @@ services:
       - home-web
 
   speedtest-tracker:
-    image: linuxserver/speedtest-tracker:1.0.3
+    image: linuxserver/speedtest-tracker:1.2.0
     container_name: speedtest-tracker
     ports:
       - 8080:80
