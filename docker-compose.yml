@@ -66,6 +66,7 @@ services:
       - VPN_SERVICE_PROVIDER=nordvpn
       - VPN_TYPE=wireguard
       - SERVER_COUNTRIES=Netherlands
+      - SERVER_CITIES=Amsterdam
       # Wireguard:
       - WIREGUARD_PRIVATE_KEY=${NORDVPN_TOKEN}
       - TZ=Europe/Amsterdam
