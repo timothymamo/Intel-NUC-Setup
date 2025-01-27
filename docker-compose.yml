@@ -60,6 +60,7 @@ services:
       - 6789:6789
       - 6881:6881
       - 6881:6881/udp
+      - 8480:8080
     volumes:
       - /home/tim/config/gluetun:/gluetun
     environment:
@@ -180,7 +181,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Etc/UTC
+      - TZ=Europe/Amsterdam
       - NZBGET_USER=${TRANSMISSION_USERNAME}
       - NZBGET_PASS=${TRANSMISSION_PASSWORD}
     volumes:
@@ -189,6 +190,19 @@ services:
     restart: unless-stopped
     network_mode: "service:gluetun"
 
+  sabnzbd:
+    image: lscr.io/linuxserver/sabnzbd:4.4.1
+    container_name: sabnzbd
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /home/tim/config/sabnzbd:/config
+      - /home/tim/nas/data/usenet:/data/usenet
+    restart: unless-stopped
+    network_mode: "service:gluetun"
+  
   sonarr:
     image: linuxserver/sonarr:4.0.12
     container_name: sonarr
