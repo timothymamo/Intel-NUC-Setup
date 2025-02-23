@@ -78,7 +78,7 @@ services:
       - home-web
 
   homeassistant:
-    image: ghcr.io/home-assistant/home-assistant:2025.2.4
+    image: ghcr.io/home-assistant/home-assistant:2025.2.5
     container_name: homeassistant
     hostname: homeassistant 
     depends_on:
@@ -122,7 +122,7 @@ services:
       - 8086:8086
 
   grafana:
-    image: grafana/grafana:11.5.1
+    image: grafana/grafana:11.5.2
     container_name: grafana
     hostname: grafana
     user: 0:0
@@ -176,7 +176,7 @@ services:
     network_mode: "service:gluetun"
 
   nzbget:
-    image: lscr.io/linuxserver/nzbget:24.5.20250214
+    image: lscr.io/linuxserver/nzbget:24.5.20250221
     container_name: nzbget
     environment:
       - PUID=1000
@@ -225,7 +225,7 @@ services:
       - home-web
   
   radarr:
-    image: linuxserver/radarr:5.19.2-nightly
+    image: linuxserver/radarr:5.19.3-nightly
     container_name: radarr
     hostname: radarr
     depends_on:
@@ -262,7 +262,7 @@ services:
       - home-web
 
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr:1.31.2-nightly
+    image: lscr.io/linuxserver/prowlarr:1.32.0-nightly
     container_name: prowlarr
     hostname: prowlarr
     depends_on:
