@@ -262,7 +262,7 @@ services:
       - home-web
 
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr:1.35.1-nightly
+    image: lscr.io/linuxserver/prowlarr:1.36.1-nightly
     container_name: prowlarr
     hostname: prowlarr
     depends_on:
