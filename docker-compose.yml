@@ -27,7 +27,7 @@ services:
 
   authelia:
     container_name: 'authelia'
-    image: ghcr.io/authelia/authelia:4.39.1
+    image: ghcr.io/authelia/authelia:4.39.2
     restart: unless-stopped
     user: "1000:1000"
     depends_on:
