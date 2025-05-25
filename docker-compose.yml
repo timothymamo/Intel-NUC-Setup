@@ -104,7 +104,7 @@ services:
     network_mode: host
 
   influxdb:
-    image: influxdb:2.7.11
+    image: influxdb:2.7.12
     container_name: influxdb 
     restart: unless-stopped
     hostname: influxdb
