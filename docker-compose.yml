@@ -343,7 +343,6 @@ services:
       - TZ=Netherlands/Amsterdam
       - FTLCONF_webserver_api_password=${PIHOLE_PASSWORD}
       - VIRTUAL_PORT=80
-      - FTLCONF_webserver_port=8380
     volumes:
       - /home/tim/pihole/etc-pihole/:/etc/pihole/
       - /home/tim/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
