@@ -292,7 +292,10 @@ services:
       - /home/tim/nas/data/media/audiobookshelf/metadata:/metadata
     environment:
       - TZ=Europe/Amsterdam
+      - PORT=13378
     restart: unless-stopped
+    networks:
+      - home-web
 
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:v3.3.25
