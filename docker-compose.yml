@@ -280,6 +280,20 @@ services:
     networks:
       - home-web
 
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:v2.25.1
+    container_name: audiobookshelf
+    ports:
+      - 13378:13378
+    volumes:
+      - /home/tim/nas/data/media/audiobooks:/audiobooks
+      - /home/tim/nas/data/media/podcasts:/podcasts
+      - /home/tim/config/audiobookshelf:/config
+      - /home/tim/nas/data/media/audiobookshelf/metadata:/metadata
+    environment:
+      - TZ=Europe/Amsterdam
+    restart: unless-stopped
+
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:v3.3.25
     container_name: flaresolverr
