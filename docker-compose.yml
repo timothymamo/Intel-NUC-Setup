@@ -262,7 +262,7 @@ services:
       - home-web
 
   lidarr:
-    image: lscr.io/linuxserver/lidarr:latest
+    image: lscr.io/linuxserver/lidarr:2.12.4.4658-ls45
     container_name: lidarr
     environment:
       - PUID=1000
