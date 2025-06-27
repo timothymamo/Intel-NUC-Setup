@@ -261,6 +261,22 @@ services:
     networks:
       - home-web
 
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /home/tim/config/lidarr:/config
+      - /home/tim/nas/data:/data
+    ports:
+      - 8686:8686
+    restart: unless-stopped
+    networks:
+      - home-web
+
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:2.0.1-nightly
     container_name: prowlarr
