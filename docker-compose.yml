@@ -121,22 +121,6 @@ services:
     ports:
       - 8086:8086
 
-  grafana:
-    image: grafana/grafana:12.0.2
-    container_name: grafana
-    hostname: grafana
-    user: 0:0
-    depends_on:
-      - web
-      - telegraf
-    restart: unless-stopped
-    volumes:
-      - /home/tim/config/grafana:/var/lib/grafana
-    ports:
-      - 3000:3000
-    networks:
-      - home-web
-
   telegraf:
     image: telegraf:1.35.1 
     container_name: telegraf
@@ -159,6 +143,22 @@ services:
       - /:/hostfs:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+
+  grafana:
+    image: grafana/grafana:12.0.2
+    container_name: grafana
+    hostname: grafana
+    user: 0:0
+    depends_on:
+      - web
+      - telegraf
+    restart: unless-stopped
+    volumes:
+      - /home/tim/config/grafana:/var/lib/grafana
+    ports:
+      - 3000:3000
+    networks:
+      - home-web
 
   transmission:
     image: linuxserver/transmission:4.0.6
@@ -302,8 +302,8 @@ services:
     ports:
       - 13378:13378
     volumes:
-      - /home/tim/nas/data/media/audiobooks:/audiobooks
-      - /home/tim/nas/data/media/podcasts:/podcasts
+      - /home/tim/nas/data/media/audio/audiobooks:/audiobooks
+      - /home/tim/nas/data/media/audio/podcasts:/podcasts
       - /home/tim/config/audiobookshelf:/config
       - /home/tim/nas/data/media/audiobookshelf/metadata:/metadata
     environment:
