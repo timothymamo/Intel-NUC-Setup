@@ -122,7 +122,7 @@ services:
       - 8086:8086
 
   telegraf:
-    image: telegraf:1.35.1 
+    image: telegraf:1.35.2 
     container_name: telegraf
     hostname: telegraf
     user: telegraf:998
